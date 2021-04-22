@@ -12,7 +12,7 @@
         </Console>
 
         <!-- append is false for test purposes so the logfiles are automatically overwritten. Don't use this on production. -->
-        <RollingFile name="rollingFile" append="false" fileName="logs/error.log"
+        <RollingFile name="rollingFile" append="false" fileName="logs/console.log"
                      filePattern="logs/error-%d{yyyy-MM-dd}.%i.log">
             <PatternLayout disableAnsi="false" pattern="${logpattern}"/>
             <Policies>
@@ -29,7 +29,7 @@
             <AppenderRef ref="rollingFile"/>
         </Logger>-->
 
-        <Logger name="org.hibernate" level="INFO"/>
+        <Logger name="org.hibernate" level="WARN"/>
 
         <!--to show binding parameter log statements:-->
         <Logger name="org.hibernate.type.descriptor.sql" level="TRACE"/>
