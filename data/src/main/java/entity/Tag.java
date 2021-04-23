@@ -13,7 +13,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-public class Ingredient implements Identifiable<Long> {
+public class Tag implements Identifiable<Long> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,9 +21,4 @@ public class Ingredient implements Identifiable<Long> {
 
     @Column(nullable = false)
     private String naam;
-    private int calorienPerHonderd;
-
-    @OneToOne
-    private Recept isRecept = null;
-
 }
