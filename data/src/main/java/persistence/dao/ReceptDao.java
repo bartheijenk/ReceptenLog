@@ -1,7 +1,7 @@
-package dao;
+package persistence.dao;
 
-import entity.Recept;
-import util.Dao;
+import persistence.entity.Recept;
+import persistence.util.Dao;
 
 import javax.persistence.EntityManager;
 
@@ -13,7 +13,7 @@ public class ReceptDao extends Dao<Recept, Long> {
         super(em);
     }
 
-    public ReceptDao getInstance(EntityManager em) {
+    public static ReceptDao getInstance(EntityManager em) {
         if (instance == null) {
             instance = new ReceptDao(em);
         }

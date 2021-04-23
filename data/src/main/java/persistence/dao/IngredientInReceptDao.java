@@ -1,8 +1,8 @@
-package dao;
+package persistence.dao;
 
-import entity.IngredientInRecept;
-import entity.IngredientInReceptKey;
-import util.Dao;
+import persistence.entity.IngredientInRecept;
+import persistence.entity.IngredientInReceptKey;
+import persistence.util.Dao;
 
 import javax.persistence.EntityManager;
 

@@ -1,10 +1,10 @@
-package entity;
+package persistence.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import util.Identifiable;
+import persistence.util.Identifiable;
 
 import javax.persistence.*;
 
@@ -13,6 +13,9 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@NamedQueries({
+        @NamedQuery(name = "IngredientInRecept.findAll", query = "select r from IngredientInRecept r")
+})
 public class IngredientInRecept implements Identifiable<IngredientInReceptKey> {
 
     @EmbeddedId
