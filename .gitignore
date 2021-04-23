@@ -170,3 +170,4 @@ nbdist/
 
 **/target/*
 **/logs/*
+/data/src/main/java/dataApp.java
