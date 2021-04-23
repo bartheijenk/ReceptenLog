@@ -1,7 +1,7 @@
-package entity;
+package persistence.entity;
 
 import lombok.*;
-import util.Identifiable;
+import persistence.util.Identifiable;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -11,6 +11,9 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@NamedQueries({
+        @NamedQuery(name = "Recept.findAll", query = "select r from Recept r")
+})
 public class Recept implements Identifiable<Long> {
 
     @Id

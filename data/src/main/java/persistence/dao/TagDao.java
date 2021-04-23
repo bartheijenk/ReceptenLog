@@ -1,7 +1,7 @@
-package dao;
+package persistence.dao;
 
-import entity.Tag;
-import util.Dao;
+import persistence.entity.Tag;
+import persistence.util.Dao;
 
 import javax.persistence.EntityManager;
 

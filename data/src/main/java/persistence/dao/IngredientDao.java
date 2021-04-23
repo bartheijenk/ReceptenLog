@@ -1,7 +1,7 @@
-package dao;
+package persistence.dao;
 
-import entity.Ingredient;
-import util.Dao;
+import persistence.entity.Ingredient;
+import persistence.util.Dao;
 
 import javax.persistence.EntityManager;
 
@@ -13,7 +13,7 @@ public class IngredientDao extends Dao<Ingredient, Long> {
         super(em);
     }
 
-    public IngredientDao getInstance(EntityManager em) {
+    public static IngredientDao getInstance(EntityManager em) {
         if (instance == null) {
             instance = new IngredientDao(em);
         }
