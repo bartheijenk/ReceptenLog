@@ -1,26 +1,38 @@
-import persistence.ReceptInvoerenService;
+package persistence;
+
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import persistence.entity.Ingredient;
 import persistence.entity.IngredientInRecept;
 import persistence.entity.Recept;
 import persistence.entity.Tag;
 
+import javax.persistence.EntityManager;
+import javax.persistence.Persistence;
 import java.util.Set;
 
-public class ConsoleApp {
-    public static void main(String[] args) {
-        new ConsoleApp().start();
-    }
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
-    public void start() {
-        ReceptInvoerenService receptInvoerenService = new ReceptInvoerenService();
+class ReceptInvoerenServiceIT {
+    static EntityManager em = Persistence.createEntityManagerFactory("H2-test").createEntityManager();
 
-        Recept recept = Recept.builder()
+    private final ReceptInvoerenService receptInvoerenService = new ReceptInvoerenService(em);
+
+    private static Recept recept;
+
+    @BeforeAll
+    static void setUp() {
+        em.getTransaction().begin();
+
+        recept = Recept.builder()
                 .titel("Bolognese")
                 .instructies("kook het")
                 .servings(4)
                 .tag(Tag.builder()
                         .naam("Pasta").build())
                 .build();
+
         recept.getIngredienten().addAll(
                 Set.of(
                         IngredientInRecept.builder()
@@ -37,8 +49,21 @@ public class ConsoleApp {
                                 .eenheid("mL")
                                 .recept(recept).build()
                 ));
+    }
 
+    @AfterEach
+    void clearTransaction() {
+        if (em.getTransaction().isActive()) {
+            em.getTransaction().rollback();
+        }
+    }
 
-        receptInvoerenService.saveRecept(recept);
+    @Test
+    void saveRecept() {
+        Recept actual = receptInvoerenService.saveRecept(recept);
+
+        assertThat(actual.getId()).isNotNull();
+        assertThat(actual.getIngredienten().stream().findFirst().get().getId()).isNotNull();
+
     }
 }

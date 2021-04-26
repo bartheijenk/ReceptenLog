@@ -28,13 +28,11 @@ public class Recept implements Identifiable<Long> {
     private String bron;
 
     @Column(nullable = false)
-    @Lob
     private String instructies;
 
     @Builder.Default
     @OneToMany(mappedBy = "ingredient",
             cascade = CascadeType.PERSIST)
-    @ToString.Exclude // to break circular dependency with Team in tostring
     @EqualsAndHashCode.Exclude
     private Set<IngredientInRecept> ingredienten = new HashSet<>();
 

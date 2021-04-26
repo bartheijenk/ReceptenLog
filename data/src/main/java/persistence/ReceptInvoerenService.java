@@ -6,11 +6,30 @@ import persistence.entity.Ingredient;
 import persistence.entity.IngredientInRecept;
 import persistence.entity.Recept;
 
+import javax.persistence.EntityManager;
 import java.util.Set;
 
 public class ReceptInvoerenService {
-    private final ReceptDao receptDao = ReceptDao.getInstance(EntityManagerProvider.getEntityManager());
-    private final IngredientDao ingredientDao = IngredientDao.getInstance(EntityManagerProvider.getEntityManager());
+
+    private static ReceptInvoerenService instance;
+
+    public static ReceptInvoerenService getInstance() {
+        if (instance == null) {
+            instance = new ReceptInvoerenService();
+        }
+        return instance;
+    }
+
+    private ReceptDao receptDao = ReceptDao.getInstance(EntityManagerProvider.getEntityManager());
+    private IngredientDao ingredientDao = IngredientDao.getInstance(EntityManagerProvider.getEntityManager());
+
+    public ReceptInvoerenService(EntityManager em) {
+        receptDao = ReceptDao.getInstance(em);
+        ingredientDao = IngredientDao.getInstance(em);
+    }
+
+    public ReceptInvoerenService() {
+    }
 
     public Recept saveRecept(Recept recept) {
         Set<IngredientInRecept> ingredienten = recept.getIngredienten();

@@ -1,9 +1,6 @@
 package persistence.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import persistence.util.Identifiable;
 
 import javax.persistence.*;
@@ -28,11 +25,14 @@ public class IngredientInRecept implements Identifiable<Long> {
     @Column(nullable = false)
     private String eenheid;
 
+    private String instructie;
+
     @ManyToOne
     @JoinColumn(name = "ingredient_id")
     private Ingredient ingredient;
 
     @ManyToOne
     @JoinColumn(name = "recept_id")
+    @ToString.Exclude
     private Recept recept;
 }

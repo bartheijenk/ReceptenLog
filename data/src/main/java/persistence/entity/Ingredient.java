@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 import persistence.util.Identifiable;
 
 import javax.persistence.*;
-import java.util.Set;
 
 @Data
 @Builder
@@ -30,7 +29,5 @@ public class Ingredient implements Identifiable<Long> {
     @OneToOne
     private Recept isRecept = null;
 
-    @OneToMany(mappedBy = "recept")
-    Set<IngredientInRecept> recepts;
 
 }
