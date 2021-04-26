@@ -1,9 +1,6 @@
 package persistence.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import persistence.util.Identifiable;
 
 import javax.persistence.*;
@@ -13,26 +10,29 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@Table(name = "ingredientinrecept")
 @NamedQueries({
         @NamedQuery(name = "IngredientInRecept.findAll", query = "select r from IngredientInRecept r")
 })
-public class IngredientInRecept implements Identifiable<IngredientInReceptKey> {
+public class IngredientInRecept implements Identifiable<Long> {
 
-    @EmbeddedId
-    private IngredientInReceptKey id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @Column(nullable = false)
     private double hoeveelheid;
     @Column(nullable = false)
     private String eenheid;
 
+    private String instructie;
+
     @ManyToOne
-    @MapsId("ingredientId")
     @JoinColumn(name = "ingredient_id")
     private Ingredient ingredient;
 
     @ManyToOne
-    @MapsId("receptId")
     @JoinColumn(name = "recept_id")
+    @ToString.Exclude
     private Recept recept;
 }

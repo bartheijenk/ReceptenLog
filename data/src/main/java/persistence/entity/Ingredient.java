@@ -22,11 +22,12 @@ public class Ingredient implements Identifiable<Long> {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String naam;
     private int calorienPerHonderd;
 
     @OneToOne
     private Recept isRecept = null;
+
 
 }

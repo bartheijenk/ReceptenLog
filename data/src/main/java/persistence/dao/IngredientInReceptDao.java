@@ -1,12 +1,11 @@
 package persistence.dao;
 
 import persistence.entity.IngredientInRecept;
-import persistence.entity.IngredientInReceptKey;
 import persistence.util.Dao;
 
 import javax.persistence.EntityManager;
 
-public class IngredientInReceptDao extends Dao<IngredientInRecept, IngredientInReceptKey> {
+public class IngredientInReceptDao extends Dao<IngredientInRecept, Long> {
 
     private static IngredientInReceptDao instance;
 
