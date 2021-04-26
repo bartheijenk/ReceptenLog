@@ -57,8 +57,10 @@ public class ReceptInvoerenService {
         Set<IngredientInRecept> ingredienten = recept.getIngredienten();
 
         for (IngredientInRecept ingredientInRecept : ingredienten) {
-            ingredientDao.saveIfNotExists(ingredientInRecept.getIngredient());
-            Ingredient byName = ingredientDao.findByName(ingredientInRecept.getIngredient().getNaam());
+            Ingredient ingredient = ingredientInRecept.getIngredient();
+
+            ingredientDao.saveIfNotExists(ingredient);
+            Ingredient byName = ingredientDao.findByName(ingredient.getNaam());
             ingredientInRecept.setIngredient(byName);
         }
 
