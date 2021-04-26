@@ -44,6 +44,7 @@ public class ReceptInvoerenService {
         return recept;
     }
 
+    //saves Tags if necessary then grabs them from the database to fill IDs
     private void mergeTags(Recept recept) {
         Set<Tag> tags = new HashSet<>();
         for (Tag tag : recept.getTags()) {
@@ -53,6 +54,7 @@ public class ReceptInvoerenService {
         recept.setTags(tags);
     }
 
+    //saves ingredients if necessary then grabs them from the database to fill IDs
     private void mergeIngredienten(Recept recept) {
         Set<IngredientInRecept> ingredienten = recept.getIngredienten();
 

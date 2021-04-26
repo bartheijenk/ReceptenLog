@@ -26,10 +26,20 @@ public class ReceptInvoeren implements Boundary {
     @Override
     public void start() {
         System.out.println("--------------------Recept Invoer--------------------");
+        Recept recept = leesInvoerVoorRecept();
+
+        recept = ReceptInvoerenService.getInstance().saveRecept(recept);
+
+        System.out.println("Ingevoerde recept: " + recept);
+    }
+
+    private Recept leesInvoerVoorRecept() {
         System.out.println("Wat is de titel van het recept?");
         String titel = prompt("Titel: ");
+
         System.out.println("Hoeveel servings heeft dit recept?");
         int servings = Integer.parseInt(prompt("Servings: "));
+
         System.out.println("Heeft dit recept een bron? (Mag leeg zijn)");
         String bron = prompt("Bron: ");
         if (bron.equals(""))
@@ -43,8 +53,7 @@ public class ReceptInvoeren implements Boundary {
         instructies.forEach(s -> stringBuilder.append("\n").append(s));
 
         Set<Tag> tags = leesTags();
-
-        Recept recept = Recept.builder()
+        return Recept.builder()
                 .titel(titel)
                 .servings(servings)
                 .bron(bron)
@@ -52,8 +61,6 @@ public class ReceptInvoeren implements Boundary {
                 .instructies(stringBuilder.toString())
                 .tags(tags)
                 .build();
-
-        System.out.println("Ingevoerde recept: " + ReceptInvoerenService.getInstance().saveRecept(recept));
     }
 
     private Set<Tag> leesTags() {
@@ -71,7 +78,7 @@ public class ReceptInvoeren implements Boundary {
         Set<IngredientInRecept> output = new HashSet<>();
 
         System.out.println("Voer nu alle ingredienten in. Deze moeten in de vorm: " +
-                "\'-<hoeveelheid> <eenheid> <naam van ingredient>, <eventueel instructie>" +
+                "'-<hoeveelheid> <eenheid> <naam van ingredient>, <eventueel instructie>" +
                 "\nHet hoeft niet per se met enters gescheiden worden maar wel met dashes (-).");
 
         String ingredientenString = readMultiple();

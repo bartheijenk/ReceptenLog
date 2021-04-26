@@ -6,9 +6,7 @@ import persistence.util.Dao;
 
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
-import javax.persistence.Query;
 import javax.persistence.TypedQuery;
-import java.util.List;
 
 @Log4j2
 public class IngredientDao extends Dao<Ingredient, Long> {
@@ -35,13 +33,6 @@ public class IngredientDao extends Dao<Ingredient, Long> {
             log.debug(e.getMessage());
             return null;
         }
-    }
-
-    @SuppressWarnings("unchecked")
-    public List<Ingredient> findAllByName(List<String> list) {
-        Query query = em.createQuery("select i from Ingredient i where i.naam in :list");
-        query.setParameter("list", list);
-        return query.getResultList();
     }
 
     public void saveIfNotExists(Ingredient ingredient) {

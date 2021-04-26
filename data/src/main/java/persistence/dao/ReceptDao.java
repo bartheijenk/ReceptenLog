@@ -1,6 +1,5 @@
 package persistence.dao;
 
-import persistence.entity.IngredientInRecept;
 import persistence.entity.Recept;
 import persistence.util.Dao;
 
@@ -19,17 +18,5 @@ public class ReceptDao extends Dao<Recept, Long> {
             instance = new ReceptDao(em);
         }
         return instance;
-    }
-
-    public void saveIngredientInRecept(IngredientInRecept ingredientInRecept) {
-        try {
-            em.getTransaction().begin();
-//            ingredientInRecept.setId(new IngredientInReceptKey(ingredientInRecept.getRecept().getId(),
-//                    ingredientInRecept.getIngredient().getId()));
-            em.persist(ingredientInRecept);
-            em.getTransaction().commit();
-        } catch (Exception exception) {
-            exception.printStackTrace();
-        }
     }
 }

@@ -46,7 +46,7 @@ public abstract class Dao<E extends Identifiable<K>, K> {
         em.getTransaction().commit();
     }
 
-    public Boolean exists(E e) {
+    public Boolean contains(E e) {
         return em.contains(e);
     }
 
