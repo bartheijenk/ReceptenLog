@@ -10,15 +10,16 @@ import persistence.entity.Tag;
 
 import javax.persistence.EntityManager;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
-public class ReceptInvoerenService {
+public class ReceptService {
 
-    private static ReceptInvoerenService instance;
+    private static ReceptService instance;
 
-    public static ReceptInvoerenService getInstance() {
+    public static ReceptService getInstance() {
         if (instance == null) {
-            instance = new ReceptInvoerenService();
+            instance = new ReceptService();
         }
         return instance;
     }
@@ -27,12 +28,12 @@ public class ReceptInvoerenService {
     private IngredientDao ingredientDao = IngredientDao.getInstance(EntityManagerProvider.getEntityManager());
     private TagDao tagDao = TagDao.getInstance(EntityManagerProvider.getEntityManager());
 
-    public ReceptInvoerenService(EntityManager em) {
+    public ReceptService(EntityManager em) {
         receptDao = ReceptDao.getInstance(em);
         ingredientDao = IngredientDao.getInstance(em);
     }
 
-    public ReceptInvoerenService() {
+    public ReceptService() {
     }
 
     public Recept saveRecept(Recept recept) {
@@ -42,6 +43,14 @@ public class ReceptInvoerenService {
         receptDao.save(recept);
 
         return recept;
+    }
+
+    public Map<Long, String> getAllReceptNamenEnID() {
+        return receptDao.getReceptenNaamOpId();
+    }
+
+    public Recept getReceptById(Long id) {
+        return receptDao.find(id);
     }
 
     //saves Tags if necessary then grabs them from the database to fill IDs

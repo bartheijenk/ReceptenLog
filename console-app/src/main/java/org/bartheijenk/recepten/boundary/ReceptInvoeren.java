@@ -1,6 +1,6 @@
 package org.bartheijenk.recepten.boundary;
 
-import persistence.ReceptInvoerenService;
+import persistence.ReceptService;
 import persistence.entity.Ingredient;
 import persistence.entity.IngredientInRecept;
 import persistence.entity.Recept;
@@ -28,7 +28,7 @@ public class ReceptInvoeren implements Boundary {
         System.out.println("--------------------Recept Invoer--------------------");
         Recept recept = leesInvoerVoorRecept();
 
-        recept = ReceptInvoerenService.getInstance().saveRecept(recept);
+        recept = ReceptService.getInstance().saveRecept(recept);
 
         System.out.println("Ingevoerde recept: " + recept);
     }
