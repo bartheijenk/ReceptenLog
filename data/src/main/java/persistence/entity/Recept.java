@@ -4,6 +4,7 @@ import lombok.*;
 import persistence.util.Identifiable;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 @Data
@@ -18,19 +19,24 @@ public class Recept implements Identifiable<Long> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public Long id;
+    private Long id;
 
     @Column(nullable = false)
     private String titel;
     @Column(nullable = false)
-    private String instructies;
-    @Column(nullable = false)
     private int servings;
     private String bron;
 
-    @Singular("ingredient")
-    @OneToMany(mappedBy = "ingredient")
-    private Set<IngredientInRecept> ingredienten;
+    @Column(nullable = false)
+    @Lob
+    private String instructies;
+
+    @Builder.Default
+    @OneToMany(mappedBy = "ingredient",
+            cascade = CascadeType.PERSIST)
+    @ToString.Exclude // to break circular dependency with Team in tostring
+    @EqualsAndHashCode.Exclude
+    private Set<IngredientInRecept> ingredienten = new HashSet<>();
 
     @Singular
     @ManyToMany(cascade = {
@@ -42,4 +48,5 @@ public class Recept implements Identifiable<Long> {
             inverseJoinColumns = @JoinColumn(name = "tag_id")
     )
     private Set<Tag> tags;
+
 }
