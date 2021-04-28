@@ -33,7 +33,7 @@ public class ReceptUtils {
         System.out.println("\nIngredienten: ");
         rec.getIngredienten().forEach(
                 i -> System.out.println("- " + i.getHoeveelheid() + " " + i.getEenheid() + " " + i.getIngredient().getNaam() + (
-                        i.getInstructie().equals("") ? "" : ", " + i.getInstructie())
+                        i.getInstructie() == null || i.getInstructie().equals("") ? "" : ", " + i.getInstructie())
                 )
         );
         System.out.println("Bereidingswijze: ");
