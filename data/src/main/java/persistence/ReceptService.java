@@ -9,9 +9,7 @@ import persistence.entity.Recept;
 import persistence.entity.Tag;
 
 import javax.persistence.EntityManager;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class ReceptService {
 
@@ -19,21 +17,19 @@ public class ReceptService {
 
     public static ReceptService getInstance() {
         if (instance == null) {
-            instance = new ReceptService();
+            instance = new ReceptService(EntityManagerProvider.getEntityManager());
         }
         return instance;
     }
 
-    private ReceptDao receptDao = ReceptDao.getInstance(EntityManagerProvider.getEntityManager());
-    private IngredientDao ingredientDao = IngredientDao.getInstance(EntityManagerProvider.getEntityManager());
-    private final TagDao tagDao = TagDao.getInstance(EntityManagerProvider.getEntityManager());
+    private final ReceptDao receptDao;
+    private final IngredientDao ingredientDao;
+    private final TagDao tagDao;
 
     public ReceptService(EntityManager em) {
         receptDao = ReceptDao.getInstance(em);
         ingredientDao = IngredientDao.getInstance(em);
-    }
-
-    public ReceptService() {
+        tagDao = TagDao.getInstance(em);
     }
 
     /**
@@ -81,6 +77,47 @@ public class ReceptService {
         return receptDao.find(id);
     }
     //saves Tags if necessary then grabs them from the database to fill IDs
+
+
+    /**
+     * Gets a recipe by searching for specific terms
+     *
+     * @param zoekTermen search terms provided by the user
+     * @return a List of Recept results. Is an Empty list if nothing found
+     */
+    public List<Recept> zoekRecepten(String zoekTermen) {
+        List<Recept> results = new LinkedList<>();
+        List<Recept> recepten = receptDao.findAll();
+        String finalZoekTermen = zoekTermen.toLowerCase(Locale.ROOT);
+
+        //Eerst zoeken op de volledige zin
+        zoekOpVolledigeTermenInTitel(results, recepten, finalZoekTermen);
+
+        //Dan zoeken op elk woord apart
+        zoekOpLosseTermenInTitel(zoekTermen, results, recepten);
+
+        return results;
+    }
+
+    private void zoekOpLosseTermenInTitel(String zoekTermen, List<Recept> results, List<Recept> recepten) {
+        String[] losseTermen = zoekTermen.split(" ");
+        for (String s : losseTermen) {
+            recepten.stream()
+                    .filter(recept -> recept.getTitel().toLowerCase(Locale.ROOT).contains(s))
+                    .forEach(recept -> {
+                        //Als het recept al eerder gevonden is hoeft deze niet nogmaals toegevoegd worden
+                        if (!results.contains(recept)) {
+                            results.add(recept);
+                        }
+                    });
+        }
+    }
+
+    private void zoekOpVolledigeTermenInTitel(List<Recept> results, List<Recept> recepten, String finalZoekTermen) {
+        recepten.stream()
+                .filter(recept -> recept.getTitel().toLowerCase(Locale.ROOT).contains(finalZoekTermen))
+                .forEach(results::add);
+    }
 
     private void mergeTags(Recept recept) {
         Set<Tag> tags = new HashSet<>();
