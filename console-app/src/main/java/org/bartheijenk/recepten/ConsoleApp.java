@@ -3,6 +3,7 @@ package org.bartheijenk.recepten;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.function.Consumer;
 
 public class ConsoleApp {
 
@@ -44,6 +45,18 @@ public class ConsoleApp {
             list.add(s);
         }
         return list;
+    }
+
+    public static void vraagDetails(Consumer<Long> consumer) {
+        System.out.println("\nWelke optie wilt u hebben?");
+        System.out.println("Geef het nummer dat boven staat op.");
+        System.out.println("Of geef x om terug te gaan.");
+        String s = readLine();
+
+        if (!s.equals("x")) {
+            Long keuze = Long.parseLong(s);
+            consumer.accept(keuze);
+        }
     }
 
 

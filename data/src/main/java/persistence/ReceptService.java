@@ -9,9 +9,7 @@ import persistence.entity.Recept;
 import persistence.entity.Tag;
 
 import javax.persistence.EntityManager;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class ReceptService {
 
@@ -81,6 +79,37 @@ public class ReceptService {
         return receptDao.find(id);
     }
     //saves Tags if necessary then grabs them from the database to fill IDs
+
+
+    /**
+     * Gets a recipe by searching for specific terms
+     *
+     * @param zoekTermen search terms provided by the user
+     * @return a List of Recept results. Is an Empty list if nothing found
+     */
+    public List<Recept> zoekRecepten(String zoekTermen) {
+        List<Recept> results = new LinkedList<>();
+        List<Recept> recepten = receptDao.findAll();
+        String finalZoekTermen = zoekTermen.toLowerCase(Locale.ROOT);
+
+        //Eerst zoeken op de volledige zin
+        recepten.stream()
+                .filter(recept -> recept.getTitel().toLowerCase(Locale.ROOT).contains(finalZoekTermen))
+                .forEach(results::add);
+
+        //Dan zoeken op elk woord apart
+        String[] losseTermen = zoekTermen.split(" ");
+        for (String s : losseTermen) {
+            recepten.stream()
+                    .filter(recept -> recept.getTitel().toLowerCase(Locale.ROOT).contains(s))
+                    .forEach(recept -> {
+                        if (!results.contains(recept)) {
+                            results.add(recept);
+                        }
+                    });
+        }
+        return results;
+    }
 
     private void mergeTags(Recept recept) {
         Set<Tag> tags = new HashSet<>();
