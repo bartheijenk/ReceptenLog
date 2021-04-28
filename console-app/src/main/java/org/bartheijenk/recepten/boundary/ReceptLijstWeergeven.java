@@ -72,7 +72,7 @@ public class ReceptLijstWeergeven implements Boundary {
     private void printCategorieRecepten(Long aLong) {
         Tag tag = tagService.getTagById(aLong);
         if (tag == null) {
-            System.out.println("Gegeven recept is niet gevonden, probeer het nogmaals.");
+            System.out.println("Gegeven categorie is niet gevonden, probeer het nogmaals.");
             vraagDetails(this::printCategorieRecepten);
         } else {
             receptService.getReceptNamenEnIDPerTag(tag).forEach(printMapConsumer());
