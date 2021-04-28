@@ -46,5 +46,4 @@ public class Recept implements Identifiable<Long> {
             inverseJoinColumns = @JoinColumn(name = "tag_id")
     )
     private Set<Tag> tags;
-
 }

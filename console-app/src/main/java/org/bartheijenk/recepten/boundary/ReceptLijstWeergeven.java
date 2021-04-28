@@ -1,8 +1,9 @@
 package org.bartheijenk.recepten.boundary;
 
 import persistence.ReceptService;
+import persistence.entity.Recept;
 
-import java.util.Map;
+import java.util.function.BiConsumer;
 
 import static org.bartheijenk.recepten.ConsoleApp.readLine;
 
@@ -29,6 +30,7 @@ public class ReceptLijstWeergeven implements Boundary {
             switch (readLine()) {
                 case "1":
                     printAll();
+                    vraagDetails();
                     break;
                 case "x":
                     return;
@@ -37,9 +39,45 @@ public class ReceptLijstWeergeven implements Boundary {
     }
 
     private void printAll() {
-        Map<Long, String> allReceptNamenEnID = receptService.getAllReceptNamenEnID();
+        receptService.getAllReceptNamenEnID().forEach(printListConsumer());
+    }
 
-        allReceptNamenEnID.forEach((aLong, s) -> System.out.println("(" + aLong.toString() + ") " + s));
+    private void vraagDetails() {
+        System.out.println("Welk recept wilt u hebben?");
+        System.out.println("Geef het nummer dat boven staat op.");
+        System.out.println("Of geef x om terug te gaan.");
+        String s = readLine();
+
+        if (!s.equals("x")) {
+            Long keuze = Long.parseLong(s);
+            printRecept(keuze);
+        }
+    }
+
+    private void printRecept(Long keuze) {
+        Recept rec = receptService.getReceptById(keuze);
+
+        System.out.println(
+                "Titel: " + rec.getTitel() +
+                        "\nServings: " + rec.getServings()
+        );
+
+        System.out.print(rec.getBron() == null ? "" : "Bron: " + rec.getBron());
+
+        System.out.println("Tags: ");
+        rec.getTags().forEach(tag -> System.out.print(tag.getNaam() + ", "));
+
+        System.out.println("\nIngredienten: ");
+        rec.getIngredienten().forEach(
+                i -> System.out.println("- " + i.getHoeveelheid() + " " + i.getEenheid() + " " + i.getIngredient().getNaam() + ", " + i.getInstructie())
+        );
+
+        System.out.println("Bereidingswijze: ");
+        System.out.println(rec.getInstructies());
+    }
+
+    private BiConsumer<Long, String> printListConsumer() {
+        return (aLong, s) -> System.out.println("(" + aLong.toString() + ") " + s);
     }
 
 }

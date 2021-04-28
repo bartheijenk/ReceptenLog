@@ -35,4 +35,5 @@ public class IngredientInRecept implements Identifiable<Long> {
     @JoinColumn(name = "recept_id")
     @ToString.Exclude
     private Recept recept;
+
 }
