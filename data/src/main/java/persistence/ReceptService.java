@@ -10,15 +10,16 @@ import persistence.entity.Tag;
 
 import javax.persistence.EntityManager;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
-public class ReceptInvoerenService {
+public class ReceptService {
 
-    private static ReceptInvoerenService instance;
+    private static ReceptService instance;
 
-    public static ReceptInvoerenService getInstance() {
+    public static ReceptService getInstance() {
         if (instance == null) {
-            instance = new ReceptInvoerenService();
+            instance = new ReceptService();
         }
         return instance;
     }
@@ -27,14 +28,20 @@ public class ReceptInvoerenService {
     private IngredientDao ingredientDao = IngredientDao.getInstance(EntityManagerProvider.getEntityManager());
     private TagDao tagDao = TagDao.getInstance(EntityManagerProvider.getEntityManager());
 
-    public ReceptInvoerenService(EntityManager em) {
+    public ReceptService(EntityManager em) {
         receptDao = ReceptDao.getInstance(em);
         ingredientDao = IngredientDao.getInstance(em);
     }
 
-    public ReceptInvoerenService() {
+    public ReceptService() {
     }
 
+    /**
+     * Saves the recipe into the database
+     *
+     * @param recept The to save recipe
+     * @return returns the saved recipe
+     */
     public Recept saveRecept(Recept recept) {
         mergeIngredienten(recept);
         mergeTags(recept);
@@ -42,6 +49,26 @@ public class ReceptInvoerenService {
         receptDao.save(recept);
 
         return recept;
+    }
+
+
+    /**
+     * Gives a map of all recipes names with their respective IDs
+     *
+     * @return a map of Long Ids with String names
+     */
+    public Map<Long, String> getAllReceptNamenEnID() {
+        return receptDao.getReceptenNaamOpId();
+    }
+
+    /**
+     * Gets a recipe by its ID
+     *
+     * @param id the ID in Long
+     * @return the found recipe, returns null if nothing found
+     */
+    public Recept getReceptById(Long id) {
+        return receptDao.find(id);
     }
 
     //saves Tags if necessary then grabs them from the database to fill IDs

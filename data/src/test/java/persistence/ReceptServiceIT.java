@@ -14,10 +14,10 @@ import java.util.Set;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
-class ReceptInvoerenServiceIT {
+class ReceptServiceIT {
     static EntityManager em = Persistence.createEntityManagerFactory("H2-test").createEntityManager();
 
-    private final ReceptInvoerenService receptInvoerenService = new ReceptInvoerenService(em);
+    private final ReceptService receptService = new ReceptService(em);
 
     private static Recept recept;
 
@@ -60,7 +60,7 @@ class ReceptInvoerenServiceIT {
 
     @Test
     void saveRecept() {
-        Recept actual = receptInvoerenService.saveRecept(recept);
+        Recept actual = receptService.saveRecept(recept);
 
         assertThat(actual.getId()).isNotNull();
         assertThat(actual.getIngredienten().stream().findFirst().get().getId()).isNotNull();

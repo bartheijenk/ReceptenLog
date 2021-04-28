@@ -4,6 +4,7 @@ import org.bartheijenk.recepten.boundary.Boundary;
 
 import static org.bartheijenk.recepten.ConsoleApp.readLine;
 import static org.bartheijenk.recepten.boundary.ReceptInvoeren.receptInvoeren;
+import static org.bartheijenk.recepten.boundary.ReceptLijstWeergeven.receptLijstWeergeven;
 
 public class HomeScreen implements Boundary {
     public void start() {
@@ -14,12 +15,16 @@ public class HomeScreen implements Boundary {
             System.out.println("----------------------------------------------");
 
             System.out.println("(1) [Recept Invoeren] ");
+            System.out.println("(2) [Recepten Weergeven] ");
             System.out.println("(x) [Afsluiten] ");
 
             try {
                 switch (readLine()) {
                     case "1":
                         receptInvoeren().start();
+                        break;
+                    case "2":
+                        receptLijstWeergeven().start();
                         break;
                     case "x":
                         System.out.println("Tot ziens.");
