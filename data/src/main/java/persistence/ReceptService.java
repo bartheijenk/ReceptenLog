@@ -17,21 +17,19 @@ public class ReceptService {
 
     public static ReceptService getInstance() {
         if (instance == null) {
-            instance = new ReceptService();
+            instance = new ReceptService(EntityManagerProvider.getEntityManager());
         }
         return instance;
     }
 
-    private ReceptDao receptDao = ReceptDao.getInstance(EntityManagerProvider.getEntityManager());
-    private IngredientDao ingredientDao = IngredientDao.getInstance(EntityManagerProvider.getEntityManager());
-    private final TagDao tagDao = TagDao.getInstance(EntityManagerProvider.getEntityManager());
+    private final ReceptDao receptDao;
+    private final IngredientDao ingredientDao;
+    private final TagDao tagDao;
 
     public ReceptService(EntityManager em) {
         receptDao = ReceptDao.getInstance(em);
         ingredientDao = IngredientDao.getInstance(em);
-    }
-
-    public ReceptService() {
+        tagDao = TagDao.getInstance(em);
     }
 
     /**
@@ -103,6 +101,7 @@ public class ReceptService {
             recepten.stream()
                     .filter(recept -> recept.getTitel().toLowerCase(Locale.ROOT).contains(s))
                     .forEach(recept -> {
+                        //Als het recept al eerder gevonden is hoeft deze niet nogmaals toegevoegd worden
                         if (!results.contains(recept)) {
                             results.add(recept);
                         }
