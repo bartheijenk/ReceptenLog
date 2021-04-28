@@ -31,8 +31,8 @@ public class ReceptZoeken implements Boundary {
 
             if (zoektermen.equals(":X"))
                 return;
-
-            geefResultaten(zoektermen);
+            else
+                geefResultaten(zoektermen);
         }
     }
 

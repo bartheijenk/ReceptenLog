@@ -91,11 +91,15 @@ public class ReceptService {
         String finalZoekTermen = zoekTermen.toLowerCase(Locale.ROOT);
 
         //Eerst zoeken op de volledige zin
-        recepten.stream()
-                .filter(recept -> recept.getTitel().toLowerCase(Locale.ROOT).contains(finalZoekTermen))
-                .forEach(results::add);
+        zoekOpVolledigeTermenInTitel(results, recepten, finalZoekTermen);
 
         //Dan zoeken op elk woord apart
+        zoekOpLosseTermenInTitel(zoekTermen, results, recepten);
+
+        return results;
+    }
+
+    private void zoekOpLosseTermenInTitel(String zoekTermen, List<Recept> results, List<Recept> recepten) {
         String[] losseTermen = zoekTermen.split(" ");
         for (String s : losseTermen) {
             recepten.stream()
@@ -107,7 +111,12 @@ public class ReceptService {
                         }
                     });
         }
-        return results;
+    }
+
+    private void zoekOpVolledigeTermenInTitel(List<Recept> results, List<Recept> recepten, String finalZoekTermen) {
+        recepten.stream()
+                .filter(recept -> recept.getTitel().toLowerCase(Locale.ROOT).contains(finalZoekTermen))
+                .forEach(results::add);
     }
 
     private void mergeTags(Recept recept) {
