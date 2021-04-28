@@ -26,7 +26,7 @@ public class ReceptService {
 
     private ReceptDao receptDao = ReceptDao.getInstance(EntityManagerProvider.getEntityManager());
     private IngredientDao ingredientDao = IngredientDao.getInstance(EntityManagerProvider.getEntityManager());
-    private TagDao tagDao = TagDao.getInstance(EntityManagerProvider.getEntityManager());
+    private final TagDao tagDao = TagDao.getInstance(EntityManagerProvider.getEntityManager());
 
     public ReceptService(EntityManager em) {
         receptDao = ReceptDao.getInstance(em);
@@ -62,6 +62,16 @@ public class ReceptService {
     }
 
     /**
+     * Gives a map of all Recipe names with their respective IDs per Tag provided
+     *
+     * @param tag the to be provided tag
+     * @return a map of Long IDs with String names
+     */
+    public Map<Long, String> getReceptNamenEnIDPerTag(Tag tag) {
+        return receptDao.getReceptenNaamOpIdPerTag(tag);
+    }
+
+    /**
      * Gets a recipe by its ID
      *
      * @param id the ID in Long
@@ -70,8 +80,8 @@ public class ReceptService {
     public Recept getReceptById(Long id) {
         return receptDao.find(id);
     }
-
     //saves Tags if necessary then grabs them from the database to fill IDs
+
     private void mergeTags(Recept recept) {
         Set<Tag> tags = new HashSet<>();
         for (Tag tag : recept.getTags()) {
@@ -80,8 +90,8 @@ public class ReceptService {
         }
         recept.setTags(tags);
     }
-
     //saves ingredients if necessary then grabs them from the database to fill IDs
+
     private void mergeIngredienten(Recept recept) {
         Set<IngredientInRecept> ingredienten = recept.getIngredienten();
 

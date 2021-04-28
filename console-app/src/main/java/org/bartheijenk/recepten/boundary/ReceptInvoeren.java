@@ -50,7 +50,7 @@ public class ReceptInvoeren implements Boundary {
         System.out.println("Voer nu de bereidingsinstructies in. Elke stap moet met een enter gescheiden zijn.");
         List<String> instructies = readMultipleAsList();
         StringBuilder stringBuilder = new StringBuilder();
-        instructies.forEach(s -> stringBuilder.append("\n").append(s));
+        instructies.forEach(s -> stringBuilder.append(s).append("\\n"));
 
         Set<Tag> tags = leesTags();
         return Recept.builder()
