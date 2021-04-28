@@ -1,11 +1,12 @@
 package persistence.dao;
 
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import persistence.entity.Tag;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
@@ -22,13 +23,13 @@ import static org.mockito.Mockito.when;
 class ReceptDaoTest {
 
     @InjectMocks
-    private ReceptDao receptDao;
+    private static ReceptDao receptDao;
 
     @Mock
-    EntityManager em;
+    private static EntityManager em;
 
-    @BeforeEach
-    void setUp() {
+    @BeforeAll
+    static void setUp() {
         receptDao = ReceptDao.getInstance(em);
     }
 
@@ -37,6 +38,7 @@ class ReceptDaoTest {
         when(mockedQuery.getResultList()).thenReturn(results);
         when(em.createQuery(name)).thenReturn(mockedQuery);
     }
+
 
     @Test
     void getReceptenNaamOpId() {
@@ -51,6 +53,22 @@ class ReceptDaoTest {
         expected.put(1L, "Test2");
 
         assertThat(receptDao.getReceptenNaamOpId()).isEqualTo(expected);
+    }
+
+    @Test
+    void getReceptenNaamOpIdPerTag() {
+        List<Object[]> mockList = new ArrayList<>(List.of(
+                new Object[]{0L, "Test"},
+                new Object[]{1L, "Test2"}
+        ));
+        mockQuery("SELECT r.id, r.titel FROM Recept r where :tag member of r.tags", mockList);
+
+        Map<Long, String> expected = new HashMap<>();
+        expected.put(0L, "Test");
+        expected.put(1L, "Test2");
+
+        assertThat(receptDao.getReceptenNaamOpIdPerTag(Tag.builder().build())).isEqualTo(expected);
 
     }
+
 }
