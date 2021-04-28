@@ -36,6 +36,12 @@ public class ReceptService {
     public ReceptService() {
     }
 
+    /**
+     * Saves the recipe into the database
+     *
+     * @param recept The to save recipe
+     * @return returns the saved recipe
+     */
     public Recept saveRecept(Recept recept) {
         mergeIngredienten(recept);
         mergeTags(recept);
@@ -45,10 +51,22 @@ public class ReceptService {
         return recept;
     }
 
+
+    /**
+     * Gives a map of all recipes names with their respective IDs
+     *
+     * @return a map of Long Ids with String names
+     */
     public Map<Long, String> getAllReceptNamenEnID() {
         return receptDao.getReceptenNaamOpId();
     }
 
+    /**
+     * Gets a recipe by its ID
+     *
+     * @param id the ID in Long
+     * @return the found recipe, returns null if nothing found
+     */
     public Recept getReceptById(Long id) {
         return receptDao.find(id);
     }

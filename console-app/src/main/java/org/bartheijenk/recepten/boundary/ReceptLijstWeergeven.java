@@ -56,24 +56,29 @@ public class ReceptLijstWeergeven implements Boundary {
 
     private void printRecept(Long keuze) {
         Recept rec = receptService.getReceptById(keuze);
+        if (rec == null) {
+            System.out.println("Gegeven recept is niet gevonden, probeer het nogmaals.");
+            vraagDetails();
+        } else {
 
-        System.out.println(
-                "Titel: " + rec.getTitel() +
-                        "\nServings: " + rec.getServings()
-        );
+            System.out.println(
+                    "Titel: " + rec.getTitel() +
+                            "\nServings: " + rec.getServings()
+            );
 
-        System.out.print(rec.getBron() == null ? "" : "Bron: " + rec.getBron());
+            System.out.print(rec.getBron() == null ? "" : "Bron: " + rec.getBron());
 
-        System.out.println("Tags: ");
-        rec.getTags().forEach(tag -> System.out.print(tag.getNaam() + ", "));
+            System.out.println("Tags: ");
+            rec.getTags().forEach(tag -> System.out.print(tag.getNaam() + ", "));
 
-        System.out.println("\nIngredienten: ");
-        rec.getIngredienten().forEach(
-                i -> System.out.println("- " + i.getHoeveelheid() + " " + i.getEenheid() + " " + i.getIngredient().getNaam() + ", " + i.getInstructie())
-        );
+            System.out.println("\nIngredienten: ");
+            rec.getIngredienten().forEach(
+                    i -> System.out.println("- " + i.getHoeveelheid() + " " + i.getEenheid() + " " + i.getIngredient().getNaam() + ", " + i.getInstructie())
+            );
 
-        System.out.println("Bereidingswijze: ");
-        System.out.println(rec.getInstructies());
+            System.out.println("Bereidingswijze: ");
+            System.out.println(rec.getInstructies());
+        }
     }
 
     private BiConsumer<Long, String> printListConsumer() {
