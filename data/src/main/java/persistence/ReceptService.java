@@ -101,8 +101,8 @@ public class ReceptService {
             ingredientDao.saveIfNotExists(ingredient);
             Ingredient byName = ingredientDao.findByName(ingredient.getNaam());
             ingredientInRecept.setIngredient(byName);
+            ingredientInRecept.setRecept(recept);
         }
-
         recept.setIngredienten(ingredienten);
     }
 }

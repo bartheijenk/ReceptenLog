@@ -32,7 +32,8 @@ public class Recept implements Identifiable<Long> {
 
     @Builder.Default
     @OneToMany(mappedBy = "ingredient",
-            cascade = CascadeType.PERSIST)
+            cascade = {CascadeType.PERSIST,
+                    CascadeType.MERGE})
     @EqualsAndHashCode.Exclude
     private Set<IngredientInRecept> ingredienten = new HashSet<>();
 
