@@ -7,6 +7,7 @@ import persistence.util.Dao;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
+import java.util.List;
 
 @Log4j2
 public class TagDao extends Dao<Tag, Long> {
@@ -39,5 +40,17 @@ public class TagDao extends Dao<Tag, Long> {
             log.debug(e.getMessage());
             return null;
         }
+    }
+
+    public List<Tag> findAllByNaam(List<String> tagNames) {
+        TypedQuery<Tag> query = em.createQuery("select t from Tag t where t.naam in :tagNames", Tag.class);
+        query.setParameter("tagNames", tagNames);
+        return query.getResultList();
+    }
+
+    public List<Tag> findAllById(List<Long> tagIds) {
+        TypedQuery<Tag> query = em.createQuery("select t from Tag t where t.id in :tagIds", Tag.class);
+        query.setParameter("tagIds", tagIds);
+        return query.getResultList();
     }
 }

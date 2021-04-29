@@ -1,8 +1,11 @@
 package persistence;
 
 import persistence.dao.ReceptDao;
+import persistence.dao.TagDao;
+import persistence.entity.Tag;
 
 import javax.persistence.EntityManager;
+import java.util.List;
 import java.util.Map;
 
 public class RandomizerService {
@@ -29,5 +32,20 @@ public class RandomizerService {
      */
     public Map<Long, String> getRandomizedList(int limit) {
         return receptDao.getRandomRecepten(limit);
+    }
+
+    /**
+     * Returns a random map of recipes based on provided tags
+     *
+     * @param limit  How many recipes should be gotten
+     * @param tagIds A List of Long Ids of tags
+     * @return returns a Map of Long Ids and String names of recipes or null if no tags are found for the IDs
+     */
+    public Map<Long, String> getRandomizedListWithTags(int limit, List<Long> tagIds) {
+        List<Tag> tags = TagDao.getInstance(EntityManagerProvider.getEntityManager()).findAllById(tagIds);
+        if (tags.isEmpty())
+            return null;
+        else
+            return receptDao.getRandomRecepten(limit, tags);
     }
 }

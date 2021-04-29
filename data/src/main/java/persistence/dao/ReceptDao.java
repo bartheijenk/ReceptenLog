@@ -46,6 +46,23 @@ public class ReceptDao extends Dao<Recept, Long> {
         return queryToMap(query);
     }
 
+    public Map<Long, String> getRandomRecepten(int limit, List<Tag> tags) {
+        StringBuilder s = new StringBuilder("SELECT r.id, r.titel FROM recipelog.recept r " +
+                "WHERE r.id in (" +
+                "SELECT rt.recept_id FROM recipelog.recept_tag rt where");
+        for (int i = 0; i < tags.size(); i++) {
+            if (i == 0)
+                s.append(" rt.tag_id = ").append(tags.get(i).getId().toString());
+            else
+                s.append(" or rt.tag_id = ").append(tags.get(i).getId().toString());
+        }
+
+        s.append(") order by RAND() LIMIT " + limit);
+        Query query = em.createNativeQuery(s.toString());
+
+        return queryToMap(query);
+    }
+
     @SuppressWarnings("unchecked")
     private Map<Long, String> queryToMap(Query query) {
         Map<Long, String> output = new HashMap<>();
