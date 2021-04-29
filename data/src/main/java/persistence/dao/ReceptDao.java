@@ -26,10 +26,8 @@ public class ReceptDao extends Dao<Recept, Long> {
         return instance;
     }
 
-    @SuppressWarnings("unchecked")
     public Map<Long, String> getReceptenNaamOpId() {
         return queryToMap(em.createQuery("SELECT r.id, r.titel FROM Recept r"));
-
     }
 
     public Map<Long, String> getReceptenNaamOpIdPerTag(Tag tag) {
@@ -47,6 +45,7 @@ public class ReceptDao extends Dao<Recept, Long> {
     }
 
     public Map<Long, String> getRandomRecepten(int limit, List<Tag> tags) {
+        //MySQL specific query!!!!
         StringBuilder s = new StringBuilder("SELECT r.id, r.titel FROM recipelog.recept r " +
                 "WHERE r.id in (" +
                 "SELECT rt.recept_id FROM recipelog.recept_tag rt where");
@@ -57,7 +56,7 @@ public class ReceptDao extends Dao<Recept, Long> {
                 s.append(" or rt.tag_id = ").append(tags.get(i).getId().toString());
         }
 
-        s.append(") order by RAND() LIMIT " + limit);
+        s.append(") order by RAND() LIMIT ").append(limit);
         Query query = em.createNativeQuery(s.toString());
 
         return queryToMap(query);
