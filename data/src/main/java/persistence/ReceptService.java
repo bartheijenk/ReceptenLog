@@ -86,37 +86,36 @@ public class ReceptService {
      * @return a List of Recept results. Is an Empty list if nothing found
      */
     public List<Recept> zoekRecepten(String zoekTermen) {
-        List<Recept> results = new LinkedList<>();
+        Set<Recept> results = new LinkedHashSet<>();
         List<Recept> recepten = receptDao.findAll();
         String finalZoekTermen = zoekTermen.toLowerCase(Locale.ROOT);
 
         //Eerst zoeken op de volledige zin
-        zoekOpVolledigeTermenInTitel(results, recepten, finalZoekTermen);
+        results.addAll(zoekOpVolledigeTermenInTitel(finalZoekTermen, recepten));
 
         //Dan zoeken op elk woord apart
-        zoekOpLosseTermenInTitel(zoekTermen, results, recepten);
+        results.addAll(zoekOpLosseTermenInTitel(zoekTermen, recepten));
 
-        return results;
+        return List.copyOf(results);
     }
 
-    private void zoekOpLosseTermenInTitel(String zoekTermen, List<Recept> results, List<Recept> recepten) {
+    private List<Recept> zoekOpLosseTermenInTitel(String zoekTermen, List<Recept> recepten) {
+        List<Recept> results = new LinkedList<>();
         String[] losseTermen = zoekTermen.split(" ");
         for (String s : losseTermen) {
             recepten.stream()
                     .filter(recept -> recept.getTitel().toLowerCase(Locale.ROOT).contains(s))
-                    .forEach(recept -> {
-                        //Als het recept al eerder gevonden is hoeft deze niet nogmaals toegevoegd worden
-                        if (!results.contains(recept)) {
-                            results.add(recept);
-                        }
-                    });
+                    .forEach(results::add);
         }
+        return results;
     }
 
-    private void zoekOpVolledigeTermenInTitel(List<Recept> results, List<Recept> recepten, String finalZoekTermen) {
+    private List<Recept> zoekOpVolledigeTermenInTitel(String finalZoekTermen, List<Recept> recepten) {
+        List<Recept> results = new LinkedList<>();
         recepten.stream()
                 .filter(recept -> recept.getTitel().toLowerCase(Locale.ROOT).contains(finalZoekTermen))
                 .forEach(results::add);
+        return results;
     }
 
     private void mergeTags(Recept recept) {
@@ -127,8 +126,8 @@ public class ReceptService {
         }
         recept.setTags(tags);
     }
-    //saves ingredients if necessary then grabs them from the database to fill IDs
 
+    //saves ingredients if necessary then grabs them from the database to fill IDs
     private void mergeIngredienten(Recept recept) {
         Set<IngredientInRecept> ingredienten = recept.getIngredienten();
 
