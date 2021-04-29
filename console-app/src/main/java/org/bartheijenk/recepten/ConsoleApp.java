@@ -3,6 +3,7 @@ package org.bartheijenk.recepten;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
 public class ConsoleApp {
@@ -57,6 +58,10 @@ public class ConsoleApp {
             Long keuze = Long.parseLong(s);
             consumer.accept(keuze);
         }
+    }
+
+    public static BiConsumer<Long, String> printMapConsumer() {
+        return (aLong, s) -> System.out.println("(" + aLong.toString() + ") " + s);
     }
 
 

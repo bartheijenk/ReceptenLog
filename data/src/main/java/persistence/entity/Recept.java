@@ -28,6 +28,7 @@ public class Recept implements Identifiable<Long> {
     private String bron;
 
     @Column(nullable = false)
+    @Lob
     private String instructies;
 
     @Builder.Default

@@ -5,10 +5,7 @@ import persistence.ReceptService;
 import persistence.TagService;
 import persistence.entity.Tag;
 
-import java.util.function.BiConsumer;
-
-import static org.bartheijenk.recepten.ConsoleApp.readLine;
-import static org.bartheijenk.recepten.ConsoleApp.vraagDetails;
+import static org.bartheijenk.recepten.ConsoleApp.*;
 
 public class ReceptLijstWeergeven implements Boundary {
 
@@ -65,12 +62,6 @@ public class ReceptLijstWeergeven implements Boundary {
             receptService.getReceptNamenEnIDPerTag(tag).forEach(printMapConsumer());
             vraagDetails(ReceptUtils::printRecept);
         }
-    }
-
-
-
-    private BiConsumer<Long, String> printMapConsumer() {
-        return (aLong, s) -> System.out.println("(" + aLong.toString() + ") " + s);
     }
 
 }
