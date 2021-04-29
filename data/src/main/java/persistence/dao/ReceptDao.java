@@ -39,6 +39,7 @@ public class ReceptDao extends Dao<Recept, Long> {
     }
 
     public Map<Long, String> getRandomRecepten(int limit) {
+        //MySQL specific query!!!!
         Query query = em.createNativeQuery("SELECT r.id, r.titel FROM recipelog.recept r order by " +
                 "RAND() LIMIT :limit");
         query.setParameter("limit", limit);
