@@ -1,12 +1,15 @@
 package org.bartheijenk.recepten;
 
+import lombok.extern.log4j.Log4j2;
 import org.bartheijenk.recepten.boundary.Boundary;
 
 import static org.bartheijenk.recepten.ConsoleApp.readLine;
+import static org.bartheijenk.recepten.boundary.Randomizer.randomizer;
 import static org.bartheijenk.recepten.boundary.ReceptInvoeren.receptInvoeren;
 import static org.bartheijenk.recepten.boundary.ReceptLijstWeergeven.receptLijstWeergeven;
 import static org.bartheijenk.recepten.boundary.ReceptZoeken.receptZoeken;
 
+@Log4j2
 public class HomeScreen implements Boundary {
     public void start() {
         while (true) {
@@ -18,6 +21,7 @@ public class HomeScreen implements Boundary {
             System.out.println("(1) [Recept Invoeren] ");
             System.out.println("(2) [Recepten Weergeven] ");
             System.out.println("(3) [Recept Zoeken] ");
+            System.out.println("(4) [Randomizer] ");
             System.out.println("(x) [Afsluiten] ");
 
             try {
@@ -30,6 +34,9 @@ public class HomeScreen implements Boundary {
                         break;
                     case "3":
                         receptZoeken().start();
+                        break;
+                    case "4":
+                        randomizer().start();
                         break;
                     case "x":
                         System.out.println("Tot ziens.");
