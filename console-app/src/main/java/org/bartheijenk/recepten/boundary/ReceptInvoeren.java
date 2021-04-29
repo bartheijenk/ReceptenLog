@@ -30,7 +30,7 @@ public class ReceptInvoeren implements Boundary {
 
         recept = ReceptService.getInstance().saveRecept(recept);
 
-        System.out.println("Ingevoerde recept: " + recept);
+        System.out.println("Ingevoerde recept: " + recept.getTitel());
     }
 
     private Recept leesInvoerVoorRecept() {

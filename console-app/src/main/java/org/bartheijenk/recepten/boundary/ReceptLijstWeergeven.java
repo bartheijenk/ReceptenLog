@@ -5,6 +5,8 @@ import persistence.ReceptService;
 import persistence.TagService;
 import persistence.entity.Tag;
 
+import java.util.Comparator;
+
 import static org.bartheijenk.recepten.ConsoleApp.*;
 
 public class ReceptLijstWeergeven implements Boundary {
@@ -49,7 +51,9 @@ public class ReceptLijstWeergeven implements Boundary {
 
     private void vraagCategorie() {
         System.out.println("Dit zijn de mogelijke categorien: ");
-        tagService.getAllTags().forEach(tag -> System.out.println("(" + tag.getId().toString() + ") " + tag.getNaam()));
+        tagService.getAllTags().stream()
+                .sorted(Comparator.comparingLong(Tag::getId))
+                .forEach(tag -> System.out.println("(" + tag.getId().toString() + ") " + tag.getNaam()));
         vraagDetails(this::printCategorieRecepten);
     }
 

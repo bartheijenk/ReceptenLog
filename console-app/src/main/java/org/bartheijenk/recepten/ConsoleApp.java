@@ -11,6 +11,7 @@ public class ConsoleApp {
     private static final Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
+        System.out.println("Loading Database connection....");
         persistence.DataInitializer.start();
         new HomeScreen().start();
     }

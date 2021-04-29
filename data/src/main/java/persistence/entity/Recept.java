@@ -32,9 +32,10 @@ public class Recept implements Identifiable<Long> {
     private String instructies;
 
     @Builder.Default
-    @OneToMany(mappedBy = "ingredient",
-            cascade = {CascadeType.PERSIST,
-                    CascadeType.MERGE})
+    @OneToMany(
+            fetch = FetchType.EAGER,
+            cascade = CascadeType.ALL)
+    @JoinColumn(name = "recept_id")
     @EqualsAndHashCode.Exclude
     private Set<IngredientInRecept> ingredienten = new HashSet<>();
 
@@ -48,4 +49,9 @@ public class Recept implements Identifiable<Long> {
             inverseJoinColumns = @JoinColumn(name = "tag_id")
     )
     private Set<Tag> tags;
+
+    public void addIngredientInRecept(IngredientInRecept ingredientInRecept) {
+        ingredientInRecept.setRecept(this);
+        ingredienten.add(ingredientInRecept);
+    }
 }
