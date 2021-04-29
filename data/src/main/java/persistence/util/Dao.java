@@ -1,4 +1,4 @@
-package util;
+package persistence.util;
 
 import lombok.extern.log4j.Log4j2;
 
@@ -29,7 +29,7 @@ public abstract class Dao<E extends Identifiable<K>, K> {
             em.persist(e);
             em.getTransaction().commit();
         } catch (Exception exception) {
-            log.warn(exception.getCause().getMessage());
+            exception.printStackTrace();
         }
     }
 
@@ -44,6 +44,10 @@ public abstract class Dao<E extends Identifiable<K>, K> {
         em.getTransaction().begin();
         em.remove(e.getId());
         em.getTransaction().commit();
+    }
+
+    public Boolean contains(E e) {
+        return em.contains(e);
     }
 
     @SuppressWarnings("unchecked")

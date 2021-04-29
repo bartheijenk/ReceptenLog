@@ -1,9 +1,10 @@
-package entity;
+package persistence.entity;
 
 import lombok.*;
-import util.Identifiable;
+import persistence.util.Identifiable;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 @Data
@@ -11,23 +12,31 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@NamedQueries({
+        @NamedQuery(name = "Recept.findAll", query = "select r from Recept r")
+})
 public class Recept implements Identifiable<Long> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public Long id;
+    private Long id;
 
     @Column(nullable = false)
     private String titel;
     @Column(nullable = false)
-    private String instructies;
-    @Column(nullable = false)
     private int servings;
     private String bron;
 
-    @Singular("ingredient")
-    @OneToMany(mappedBy = "ingredient")
-    private Set<IngredientInRecept> ingredienten;
+    @Column(nullable = false)
+    @Lob
+    private String instructies;
+
+    @Builder.Default
+    @OneToMany(mappedBy = "ingredient",
+            cascade = {CascadeType.PERSIST,
+                    CascadeType.MERGE})
+    @EqualsAndHashCode.Exclude
+    private Set<IngredientInRecept> ingredienten = new HashSet<>();
 
     @Singular
     @ManyToMany(cascade = {
