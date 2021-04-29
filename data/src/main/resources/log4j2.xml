@@ -29,12 +29,12 @@
             <AppenderRef ref="rollingFile"/>
         </Logger>-->
 
-        <Logger name="org.hibernate" level="WARN"/>
+<!--        <Logger name="org.hibernate" level="WARN"/>-->
 
         <!--to show binding parameter log statements:-->
 <!--        <Logger name="org.hibernate.type.descriptor.sql" level="TRACE"/>-->
 
-        <Root level="DEBUG">
+        <Root level="ERROR">
             <AppenderRef ref="console"/>
             <AppenderRef ref="rollingFile"/>
         </Root>

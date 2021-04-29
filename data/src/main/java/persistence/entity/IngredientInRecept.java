@@ -32,7 +32,7 @@ public class IngredientInRecept implements Identifiable<Long> {
     private Ingredient ingredient;
 
     @ManyToOne
-    @JoinColumn(name = "recept_id")
+    @JoinColumn(name = "recept_id", insertable = false, updatable = false)
     @ToString.Exclude
     private Recept recept;
 
