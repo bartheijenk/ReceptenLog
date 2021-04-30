@@ -1,6 +1,6 @@
 package org.bartheijenk.persistence.dao;
 
-import org.bartheijenk.persistence.entity.Tag;
+import org.bartheijenk.persistence.entity.Categorie;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -67,7 +67,7 @@ class ReceptDaoTest {
         expected.put(0L, "Test");
         expected.put(1L, "Test2");
 
-        assertThat(receptDao.getReceptenNaamOpIdPerTag(Tag.builder().build())).isEqualTo(expected);
+        assertThat(receptDao.getReceptenNaamOpIdPerCategorie(Categorie.builder().build())).isEqualTo(expected);
 
     }
 

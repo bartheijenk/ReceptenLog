@@ -1,8 +1,8 @@
 package org.bartheijenk.persistence.service;
 
+import org.bartheijenk.persistence.dao.CategorieDao;
 import org.bartheijenk.persistence.dao.ReceptDao;
-import org.bartheijenk.persistence.dao.TagDao;
-import org.bartheijenk.persistence.entity.Tag;
+import org.bartheijenk.persistence.entity.Categorie;
 import org.bartheijenk.persistence.util.EntityManagerProvider;
 
 import javax.persistence.EntityManager;
@@ -42,11 +42,11 @@ public class RandomizerService {
      * @param tagIds A List of Long Ids of tags
      * @return returns a Map of Long Ids and String names of recipes or null if no tags are found for the IDs
      */
-    public Map<Long, String> getRandomizedListWithTags(int limit, List<Long> tagIds) {
-        List<Tag> tags = TagDao.getInstance(EntityManagerProvider.getEntityManager()).findAllById(tagIds);
-        if (tags.isEmpty())
+    public Map<Long, String> getRandomizedListWithCategories(int limit, List<Long> tagIds) {
+        List<Categorie> categories = CategorieDao.getInstance(EntityManagerProvider.getEntityManager()).findAllById(tagIds);
+        if (categories.isEmpty())
             return null;
         else
-            return receptDao.getRandomRecepten(limit, tags);
+            return receptDao.getRandomRecepten(limit, categories);
     }
 }

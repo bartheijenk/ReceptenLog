@@ -44,11 +44,11 @@ public class Recept implements Identifiable<Long> {
                     CascadeType.PERSIST,
                     CascadeType.MERGE
             })
-    @JoinTable(name = "recept_tag",
+    @JoinTable(name = "recept_categorie",
             joinColumns = @JoinColumn(name = "recept_id"),
-            inverseJoinColumns = @JoinColumn(name = "tag_id")
+            inverseJoinColumns = @JoinColumn(name = "categorie_id")
     )
-    private Set<Tag> tags;
+    private Set<Categorie> categories;
 
     public void addIngredientInRecept(IngredientInRecept ingredientInRecept) {
         ingredientInRecept.setRecept(this);

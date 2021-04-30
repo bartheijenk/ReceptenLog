@@ -30,8 +30,8 @@ public class ReceptUtils {
 
         System.out.print(rec.getBron() == null ? "" : "Bron: " + rec.getBron() + "\n");
 
-        System.out.print("Tags: ");
-        rec.getTags().forEach(tag -> System.out.print(tag.getNaam() + ", "));
+        System.out.print("Categories: ");
+        rec.getCategories().forEach(categorie -> System.out.print(categorie.getNaam() + ", "));
 
         System.out.println("\nIngredienten: ");
         rec.getIngredienten().stream()

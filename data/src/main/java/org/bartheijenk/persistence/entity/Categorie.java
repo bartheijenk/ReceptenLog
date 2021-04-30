@@ -13,9 +13,9 @@ import javax.persistence.*;
 @AllArgsConstructor
 @Entity
 @NamedQueries({
-        @NamedQuery(name = "Tag.findAll", query = "select r from Tag r")
+        @NamedQuery(name = "Categorie.findAll", query = "select r from Categorie r")
 })
-public class Tag implements Identifiable<Long> {
+public class Categorie implements Identifiable<Long> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

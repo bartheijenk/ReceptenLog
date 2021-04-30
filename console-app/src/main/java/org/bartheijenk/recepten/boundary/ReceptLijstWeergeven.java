@@ -1,8 +1,8 @@
 package org.bartheijenk.recepten.boundary;
 
-import org.bartheijenk.persistence.entity.Tag;
+import org.bartheijenk.persistence.entity.Categorie;
+import org.bartheijenk.persistence.service.CategorieService;
 import org.bartheijenk.persistence.service.ReceptService;
-import org.bartheijenk.persistence.service.TagService;
 import org.bartheijenk.recepten.util.ReceptUtils;
 
 import java.util.Comparator;
@@ -20,7 +20,7 @@ public class ReceptLijstWeergeven implements Boundary {
     }
 
     private final ReceptService receptService = ReceptService.getInstance();
-    private final TagService tagService = TagService.getInstance();
+    private final CategorieService categorieService = CategorieService.getInstance();
 
     @Override
     public void start() {
@@ -51,19 +51,19 @@ public class ReceptLijstWeergeven implements Boundary {
 
     private void vraagCategorie() {
         System.out.println("Dit zijn de mogelijke categorien: ");
-        tagService.getAllTags().stream()
-                .sorted(Comparator.comparingLong(Tag::getId))
-                .forEach(tag -> System.out.println("(" + tag.getId().toString() + ") " + tag.getNaam()));
+        categorieService.getAllCategories().stream()
+                .sorted(Comparator.comparingLong(Categorie::getId))
+                .forEach(categorie -> System.out.println("(" + categorie.getId().toString() + ") " + categorie.getNaam()));
         vraagDetails(this::printCategorieRecepten);
     }
 
     private void printCategorieRecepten(Long aLong) {
-        Tag tag = tagService.getTagById(aLong);
-        if (tag == null) {
+        Categorie categorie = categorieService.getTagById(aLong);
+        if (categorie == null) {
             System.out.println("Gegeven categorie is niet gevonden, probeer het nogmaals.");
             vraagDetails(this::printCategorieRecepten);
         } else {
-            receptService.getReceptNamenEnIDPerTag(tag).forEach(printMapConsumer());
+            receptService.getReceptNamenEnIDPerCategorie(categorie).forEach(printMapConsumer());
             vraagDetails(ReceptUtils::printRecept);
         }
     }

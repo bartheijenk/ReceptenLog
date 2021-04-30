@@ -11,7 +11,7 @@
         <class>org.bartheijenk.persistence.entity.IngredientInRecept</class>
         <class>org.bartheijenk.persistence.entity.Ingredient</class>
         <class>org.bartheijenk.persistence.entity.Recept</class>
-        <class>org.bartheijenk.persistence.entity.Tag</class>
+        <class>org.bartheijenk.persistence.entity.Categorie</class>
         <properties>
             <property name="javax.org.bartheijenk.persistence.jdbc.url"
                       value="jdbc:h2:mem:test"/>
