@@ -1,13 +1,13 @@
 package org.bartheijenk.recepten.boundary;
 
-import org.bartheijenk.recepten.ReceptUtils;
-import persistence.ReceptService;
-import persistence.TagService;
-import persistence.entity.Tag;
+import org.bartheijenk.persistence.entity.Tag;
+import org.bartheijenk.persistence.service.ReceptService;
+import org.bartheijenk.persistence.service.TagService;
+import org.bartheijenk.recepten.util.ReceptUtils;
 
 import java.util.Comparator;
 
-import static org.bartheijenk.recepten.ConsoleApp.*;
+import static org.bartheijenk.recepten.util.InputOutputUtil.*;
 
 public class ReceptLijstWeergeven implements Boundary {
 

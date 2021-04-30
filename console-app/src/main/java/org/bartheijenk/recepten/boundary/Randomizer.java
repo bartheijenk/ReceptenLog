@@ -1,15 +1,15 @@
 package org.bartheijenk.recepten.boundary;
 
-import org.bartheijenk.recepten.ReceptUtils;
-import persistence.RandomizerService;
-import persistence.TagService;
+import org.bartheijenk.persistence.service.RandomizerService;
+import org.bartheijenk.persistence.service.TagService;
+import org.bartheijenk.recepten.util.ReceptUtils;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import static org.bartheijenk.recepten.ConsoleApp.*;
+import static org.bartheijenk.recepten.util.InputOutputUtil.*;
 
 public class Randomizer implements Boundary {
     private static Randomizer instance;

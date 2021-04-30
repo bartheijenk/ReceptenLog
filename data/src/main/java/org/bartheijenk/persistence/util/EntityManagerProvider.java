@@ -1,12 +1,12 @@
-package persistence;
+package org.bartheijenk.persistence.util;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
 
-class EntityManagerProvider {
+public class EntityManagerProvider {
     private static EntityManager em;
 
-    static EntityManager getEntityManager() {
+    public static EntityManager getEntityManager() {
         if (em == null) {
             em = Persistence.createEntityManagerFactory("MySQL-recipelog").createEntityManager();
         }

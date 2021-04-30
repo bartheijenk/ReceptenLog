@@ -1,14 +1,14 @@
-package org.bartheijenk.recepten;
+package org.bartheijenk.recepten.util;
 
 import org.apache.commons.text.StringEscapeUtils;
-import persistence.ReceptService;
-import persistence.entity.IngredientInRecept;
-import persistence.entity.Recept;
+import org.bartheijenk.persistence.entity.IngredientInRecept;
+import org.bartheijenk.persistence.entity.Recept;
+import org.bartheijenk.persistence.service.ReceptService;
 
 import java.util.Comparator;
 
-import static org.bartheijenk.recepten.ConsoleApp.readLine;
-import static org.bartheijenk.recepten.ConsoleApp.vraagDetails;
+import static org.bartheijenk.recepten.util.InputOutputUtil.readLine;
+import static org.bartheijenk.recepten.util.InputOutputUtil.vraagDetails;
 
 public class ReceptUtils {
 

@@ -1,8 +1,7 @@
-package persistence.dao;
+package org.bartheijenk.persistence.dao;
 
-import persistence.entity.Recept;
-import persistence.entity.Tag;
-import persistence.util.Dao;
+import org.bartheijenk.persistence.entity.Recept;
+import org.bartheijenk.persistence.entity.Tag;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;

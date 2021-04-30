@@ -1,6 +1,7 @@
-package persistence.util;
+package org.bartheijenk.persistence.dao;
 
 import lombok.extern.log4j.Log4j2;
+import org.bartheijenk.persistence.entity.Identifiable;
 
 import javax.persistence.EntityManager;
 import java.lang.reflect.ParameterizedType;

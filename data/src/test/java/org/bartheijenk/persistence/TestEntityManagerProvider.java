@@ -1,4 +1,4 @@
-package persistence;
+package org.bartheijenk.persistence;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Persistence;

@@ -1,9 +1,10 @@
-package persistence;
+package org.bartheijenk.persistence;
 
+import org.bartheijenk.persistence.entity.Recept;
+import org.bartheijenk.persistence.service.ReceptService;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import persistence.entity.Recept;
 
 import javax.persistence.EntityManager;
 
@@ -29,6 +30,7 @@ class ReceptServiceIT {
     }
 
     @Test
+    @SuppressWarnings("OptionalGetWithoutIsPresent")
     void saveRecept() {
         int previousSize = receptService.getAllReceptNamenEnID().size();
         Recept actual = receptService.saveRecept(recept);

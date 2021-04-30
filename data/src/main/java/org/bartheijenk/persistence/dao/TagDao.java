@@ -1,8 +1,7 @@
-package persistence.dao;
+package org.bartheijenk.persistence.dao;
 
 import lombok.extern.log4j.Log4j2;
-import persistence.entity.Tag;
-import persistence.util.Dao;
+import org.bartheijenk.persistence.entity.Tag;
 
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;

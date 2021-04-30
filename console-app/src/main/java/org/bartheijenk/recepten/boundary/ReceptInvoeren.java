@@ -1,17 +1,17 @@
 package org.bartheijenk.recepten.boundary;
 
-import persistence.ReceptService;
-import persistence.entity.Ingredient;
-import persistence.entity.IngredientInRecept;
-import persistence.entity.Recept;
-import persistence.entity.Tag;
+import org.bartheijenk.persistence.entity.Ingredient;
+import org.bartheijenk.persistence.entity.IngredientInRecept;
+import org.bartheijenk.persistence.entity.Recept;
+import org.bartheijenk.persistence.entity.Tag;
+import org.bartheijenk.persistence.service.ReceptService;
 
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import static org.bartheijenk.recepten.ConsoleApp.*;
+import static org.bartheijenk.recepten.util.InputOutputUtil.*;
 
 public class ReceptInvoeren implements Boundary {
 

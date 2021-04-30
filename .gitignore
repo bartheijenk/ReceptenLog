@@ -170,4 +170,5 @@ nbdist/
 
 **/target/*
 **/logs/*
-/data/src/main/java/dataApp.java
+/data/src/main/java/org.bartheijenk.dataApp.java
+/data/src/main/java/org/bartheijenk/dataApp.java

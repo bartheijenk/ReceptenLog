@@ -1,13 +1,12 @@
-package org.bartheijenk.recepten;
+package org.bartheijenk.recepten.boundary;
 
 import lombok.extern.log4j.Log4j2;
-import org.bartheijenk.recepten.boundary.Boundary;
 
-import static org.bartheijenk.recepten.ConsoleApp.readLine;
 import static org.bartheijenk.recepten.boundary.Randomizer.randomizer;
 import static org.bartheijenk.recepten.boundary.ReceptInvoeren.receptInvoeren;
 import static org.bartheijenk.recepten.boundary.ReceptLijstWeergeven.receptLijstWeergeven;
 import static org.bartheijenk.recepten.boundary.ReceptZoeken.receptZoeken;
+import static org.bartheijenk.recepten.util.InputOutputUtil.readLine;
 
 @Log4j2
 public class HomeScreen implements Boundary {

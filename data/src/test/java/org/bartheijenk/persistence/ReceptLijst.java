@@ -1,9 +1,9 @@
-package persistence;
+package org.bartheijenk.persistence;
 
-import persistence.entity.Ingredient;
-import persistence.entity.IngredientInRecept;
-import persistence.entity.Recept;
-import persistence.entity.Tag;
+import org.bartheijenk.persistence.entity.Ingredient;
+import org.bartheijenk.persistence.entity.IngredientInRecept;
+import org.bartheijenk.persistence.entity.Recept;
+import org.bartheijenk.persistence.entity.Tag;
 
 import java.util.List;
 import java.util.Set;

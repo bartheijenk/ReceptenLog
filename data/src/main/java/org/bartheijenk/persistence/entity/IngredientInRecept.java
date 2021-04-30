@@ -1,7 +1,6 @@
-package persistence.entity;
+package org.bartheijenk.persistence.entity;
 
 import lombok.*;
-import persistence.util.Identifiable;
 
 import javax.persistence.*;
 

@@ -1,12 +1,12 @@
-package persistence.dao;
+package org.bartheijenk.persistence.dao;
 
+import org.bartheijenk.persistence.entity.Tag;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import persistence.entity.Tag;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;

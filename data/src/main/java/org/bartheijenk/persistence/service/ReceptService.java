@@ -1,12 +1,13 @@
-package persistence;
+package org.bartheijenk.persistence.service;
 
-import persistence.dao.IngredientDao;
-import persistence.dao.ReceptDao;
-import persistence.dao.TagDao;
-import persistence.entity.Ingredient;
-import persistence.entity.IngredientInRecept;
-import persistence.entity.Recept;
-import persistence.entity.Tag;
+import org.bartheijenk.persistence.dao.IngredientDao;
+import org.bartheijenk.persistence.dao.ReceptDao;
+import org.bartheijenk.persistence.dao.TagDao;
+import org.bartheijenk.persistence.entity.Ingredient;
+import org.bartheijenk.persistence.entity.IngredientInRecept;
+import org.bartheijenk.persistence.entity.Recept;
+import org.bartheijenk.persistence.entity.Tag;
+import org.bartheijenk.persistence.util.EntityManagerProvider;
 
 import javax.persistence.EntityManager;
 import java.util.*;

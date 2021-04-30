@@ -1,8 +1,9 @@
-package persistence;
+package org.bartheijenk.persistence.service;
 
-import persistence.dao.ReceptDao;
-import persistence.dao.TagDao;
-import persistence.entity.Tag;
+import org.bartheijenk.persistence.dao.ReceptDao;
+import org.bartheijenk.persistence.dao.TagDao;
+import org.bartheijenk.persistence.entity.Tag;
+import org.bartheijenk.persistence.util.EntityManagerProvider;
 
 import javax.persistence.EntityManager;
 import java.util.List;

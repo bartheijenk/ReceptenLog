@@ -1,10 +1,9 @@
-package persistence.entity;
+package org.bartheijenk.persistence.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import persistence.util.Identifiable;
 
 import javax.persistence.*;
 

@@ -1,13 +1,13 @@
 package org.bartheijenk.recepten.boundary;
 
-import org.bartheijenk.recepten.ReceptUtils;
-import persistence.ReceptService;
-import persistence.entity.Recept;
+import org.bartheijenk.persistence.entity.Recept;
+import org.bartheijenk.persistence.service.ReceptService;
+import org.bartheijenk.recepten.util.ReceptUtils;
 
 import java.util.List;
 
-import static org.bartheijenk.recepten.ConsoleApp.prompt;
-import static org.bartheijenk.recepten.ConsoleApp.vraagDetails;
+import static org.bartheijenk.recepten.util.InputOutputUtil.prompt;
+import static org.bartheijenk.recepten.util.InputOutputUtil.vraagDetails;
 
 public class ReceptZoeken implements Boundary {
 

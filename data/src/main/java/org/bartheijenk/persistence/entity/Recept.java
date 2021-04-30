@@ -1,7 +1,6 @@
-package persistence.entity;
+package org.bartheijenk.persistence.entity;
 
 import lombok.*;
-import persistence.util.Identifiable;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -33,17 +32,18 @@ public class Recept implements Identifiable<Long> {
 
     @Builder.Default
     @OneToMany(
-            fetch = FetchType.EAGER,
+            fetch = FetchType.LAZY,
             cascade = CascadeType.ALL)
     @JoinColumn(name = "recept_id")
     @EqualsAndHashCode.Exclude
     private Set<IngredientInRecept> ingredienten = new HashSet<>();
 
     @Singular
-    @ManyToMany(cascade = {
-            CascadeType.PERSIST,
-            CascadeType.MERGE
-    })
+    @ManyToMany(
+            cascade = {
+                    CascadeType.PERSIST,
+                    CascadeType.MERGE
+            })
     @JoinTable(name = "recept_tag",
             joinColumns = @JoinColumn(name = "recept_id"),
             inverseJoinColumns = @JoinColumn(name = "tag_id")

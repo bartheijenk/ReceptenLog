@@ -1,5 +1,8 @@
-package persistence;
+package org.bartheijenk.persistence;
 
+import org.bartheijenk.persistence.dao.ReceptDao;
+import org.bartheijenk.persistence.entity.Recept;
+import org.bartheijenk.persistence.service.ReceptService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -8,8 +11,6 @@ import org.mockito.Mock;
 import org.mockito.MockedStatic;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-import persistence.dao.ReceptDao;
-import persistence.entity.Recept;
 
 import javax.persistence.EntityManager;
 

@@ -1,7 +1,6 @@
-package persistence.dao;
+package org.bartheijenk.persistence.dao;
 
-import persistence.entity.IngredientInRecept;
-import persistence.util.Dao;
+import org.bartheijenk.persistence.entity.IngredientInRecept;
 
 import javax.persistence.EntityManager;
 
