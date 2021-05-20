@@ -1,12 +1,12 @@
 package org.bartheijenk.persistence.service;
 
+import org.bartheijenk.persistence.dao.CategorieDao;
 import org.bartheijenk.persistence.dao.IngredientDao;
 import org.bartheijenk.persistence.dao.ReceptDao;
-import org.bartheijenk.persistence.dao.TagDao;
+import org.bartheijenk.persistence.entity.Categorie;
 import org.bartheijenk.persistence.entity.Ingredient;
 import org.bartheijenk.persistence.entity.IngredientInRecept;
 import org.bartheijenk.persistence.entity.Recept;
-import org.bartheijenk.persistence.entity.Tag;
 import org.bartheijenk.persistence.util.EntityManagerProvider;
 
 import javax.persistence.EntityManager;
@@ -25,12 +25,12 @@ public class ReceptService {
 
     private final ReceptDao receptDao;
     private final IngredientDao ingredientDao;
-    private final TagDao tagDao;
+    private final CategorieDao categorieDao;
 
     public ReceptService(EntityManager em) {
         receptDao = ReceptDao.getInstance(em);
         ingredientDao = IngredientDao.getInstance(em);
-        tagDao = TagDao.getInstance(em);
+        categorieDao = CategorieDao.getInstance(em);
     }
 
     /**
@@ -41,7 +41,7 @@ public class ReceptService {
      */
     public Recept saveRecept(Recept recept) {
         mergeIngredienten(recept);
-        mergeTags(recept);
+        mergeCategories(recept);
 
         receptDao.save(recept);
 
@@ -52,20 +52,20 @@ public class ReceptService {
     /**
      * Gives a map of all recipes names with their respective IDs
      *
-     * @return a map of Long Ids with String names
+     * @return a List of Recipes
      */
-    public Map<Long, String> getAllReceptNamenEnID() {
+    public List<Recept> getAllReceptNamenEnID() {
         return receptDao.getReceptenNaamOpId();
     }
 
     /**
      * Gives a map of all Recipe names with their respective IDs per Tag provided
      *
-     * @param tag the to be provided tag
-     * @return a map of Long IDs with String names
+     * @param categorie the to be provided tag
+     * @return a set of Recipes
      */
-    public Map<Long, String> getReceptNamenEnIDPerTag(Tag tag) {
-        return receptDao.getReceptenNaamOpIdPerTag(tag);
+    public List<Recept> getReceptNamenEnIDPerCategorie(Categorie categorie) {
+        return receptDao.getReceptenNaamOpIdPerCategorie(categorie);
     }
 
     /**
@@ -119,13 +119,13 @@ public class ReceptService {
         return results;
     }
 
-    private void mergeTags(Recept recept) {
-        Set<Tag> tags = new HashSet<>();
-        for (Tag tag : recept.getTags()) {
-            tagDao.saveIfNotExists(tag);
-            tags.add(tagDao.findByNaam(tag.getNaam()));
+    private void mergeCategories(Recept recept) {
+        Set<Categorie> categories = new HashSet<>();
+        for (Categorie categorie : recept.getCategories()) {
+            categorieDao.saveIfNotExists(categorie);
+            categories.add(categorieDao.findByNaam(categorie.getNaam()));
         }
-        recept.setTags(tags);
+        recept.setCategories(categories);
     }
 
     //saves ingredients if necessary then grabs them from the database to fill IDs

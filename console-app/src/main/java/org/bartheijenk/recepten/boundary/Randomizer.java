@@ -1,19 +1,19 @@
 package org.bartheijenk.recepten.boundary;
 
+import org.bartheijenk.persistence.entity.Recept;
+import org.bartheijenk.persistence.service.CategorieService;
 import org.bartheijenk.persistence.service.RandomizerService;
-import org.bartheijenk.persistence.service.TagService;
 import org.bartheijenk.recepten.util.ReceptUtils;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 import static org.bartheijenk.recepten.util.InputOutputUtil.*;
 
 public class Randomizer implements Boundary {
     private static Randomizer instance;
-    private RandomizerService randomizerService = RandomizerService.getInstance();
+    private final RandomizerService randomizerService = RandomizerService.getInstance();
 
     public static Randomizer randomizer() {
         if (instance == null)
@@ -35,7 +35,7 @@ public class Randomizer implements Boundary {
                     randomizeAll();
                     break;
                 case "2":
-                    randomizeTags();
+                    randomizeCategories();
                     break;
                 case "x":
                     return;
@@ -47,29 +47,29 @@ public class Randomizer implements Boundary {
         System.out.println("------Alles----");
         System.out.println("Hoeveel recepten wilt u?");
         int hoeveel = Integer.parseInt(readLine());
-        randomizerService.getRandomizedList(hoeveel).forEach(printMapConsumer());
+        randomizerService.getRandomizedList(hoeveel).forEach(printRecipeConsumer());
         vraagDetails(ReceptUtils::printRecept);
     }
 
-    private void randomizeTags() {
+    private void randomizeCategories() {
         System.out.println("------Categorie----");
         System.out.println("Dit zijn de mogelijke categorien: ");
-        TagService.getInstance().getAllTags().forEach(tag -> System.out.println("(" + tag.getId().toString() + ") " + tag.getNaam()));
+        CategorieService.getInstance().getAllCategories().forEach(categorie -> System.out.println("(" + categorie.getId().toString() + ") " + categorie.getNaam()));
 
         System.out.println("Meerdere opties zijn mogelijk, gescheiden door een komma.");
         String s = readLine();
-        List<Long> tags = Arrays.stream(s.split(","))
+        List<Long> categories = Arrays.stream(s.split(","))
                 .map(Long::parseLong)
                 .collect(Collectors.toList());
         System.out.println("Hoeveel recepten wilt u?");
         int hoeveel = Integer.parseInt(readLine());
 
-        Map<Long, String> randomizedListWithTags = randomizerService.getRandomizedListWithTags(hoeveel, tags);
-        if (randomizedListWithTags == null) {
+        List<Recept> randomizedListWithCategories = randomizerService.getRandomizedListWithCategories(hoeveel, categories);
+        if (randomizedListWithCategories == null) {
             System.out.println("Verkeerde invoer! Probeer het nogmaals");
-            randomizeTags();
+            randomizeCategories();
         } else {
-            randomizedListWithTags.forEach(printMapConsumer());
+            randomizedListWithCategories.forEach(printRecipeConsumer());
 
             vraagDetails(ReceptUtils::printRecept);
         }

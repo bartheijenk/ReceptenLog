@@ -1,9 +1,9 @@
 package org.bartheijenk.persistence;
 
+import org.bartheijenk.persistence.entity.Categorie;
 import org.bartheijenk.persistence.entity.Ingredient;
 import org.bartheijenk.persistence.entity.IngredientInRecept;
 import org.bartheijenk.persistence.entity.Recept;
-import org.bartheijenk.persistence.entity.Tag;
 
 import java.util.List;
 import java.util.Set;
@@ -14,7 +14,7 @@ public class ReceptLijst {
                 .titel("Spaghetti Bolognese")
                 .instructies("kook het")
                 .servings(4)
-                .tag(Tag.builder()
+                .category(Categorie.builder()
                         .naam("Pasta").build())
                 .build();
 
@@ -38,7 +38,7 @@ public class ReceptLijst {
                 .titel("Pasta Bolognese")
                 .instructies("kook het")
                 .servings(4)
-                .tag(Tag.builder()
+                .category(Categorie.builder()
                         .naam("Pasta").build())
                 .build();
 

@@ -1,9 +1,9 @@
 package org.bartheijenk.recepten.boundary;
 
+import org.bartheijenk.persistence.entity.Categorie;
 import org.bartheijenk.persistence.entity.Ingredient;
 import org.bartheijenk.persistence.entity.IngredientInRecept;
 import org.bartheijenk.persistence.entity.Recept;
-import org.bartheijenk.persistence.entity.Tag;
 import org.bartheijenk.persistence.service.ReceptService;
 
 import java.util.Arrays;
@@ -52,24 +52,24 @@ public class ReceptInvoeren implements Boundary {
         StringBuilder stringBuilder = new StringBuilder();
         instructies.forEach(s -> stringBuilder.append(s).append("\\n"));
 
-        Set<Tag> tags = leesTags();
+        Set<Categorie> categories = leesCategorie();
         return Recept.builder()
                 .titel(titel)
                 .servings(servings)
                 .bron(bron)
                 .ingredienten(ingredienten)
                 .instructies(stringBuilder.toString())
-                .tags(tags)
+                .categories(categories)
                 .build();
     }
 
-    private Set<Tag> leesTags() {
-        Set<Tag> output = new HashSet<>();
-        System.out.println("Voer alle tags (categorien) in voor dit recept. Deze moeten met commas gescheiden worden.");
-        String tags = prompt("Tags: ");
-        String[] tagsplit = tags.split(",");
-        for (String s : tagsplit) {
-            output.add(Tag.builder().naam(s.trim()).build());
+    private Set<Categorie> leesCategorie() {
+        Set<Categorie> output = new HashSet<>();
+        System.out.println("Voer alle categorien in voor dit recept. Deze moeten met commas gescheiden worden.");
+        String categories = prompt("Categorien: ");
+        String[] categoriesplit = categories.split(",");
+        for (String s : categoriesplit) {
+            output.add(Categorie.builder().naam(s.trim()).build());
         }
         return output;
     }
