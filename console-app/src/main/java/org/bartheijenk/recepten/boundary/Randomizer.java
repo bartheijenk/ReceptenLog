@@ -1,12 +1,12 @@
 package org.bartheijenk.recepten.boundary;
 
+import org.bartheijenk.persistence.entity.Recept;
 import org.bartheijenk.persistence.service.CategorieService;
 import org.bartheijenk.persistence.service.RandomizerService;
 import org.bartheijenk.recepten.util.ReceptUtils;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 import static org.bartheijenk.recepten.util.InputOutputUtil.*;
@@ -47,7 +47,7 @@ public class Randomizer implements Boundary {
         System.out.println("------Alles----");
         System.out.println("Hoeveel recepten wilt u?");
         int hoeveel = Integer.parseInt(readLine());
-        randomizerService.getRandomizedList(hoeveel).forEach(printMapConsumer());
+        randomizerService.getRandomizedList(hoeveel).forEach(printRecipeConsumer());
         vraagDetails(ReceptUtils::printRecept);
     }
 
@@ -64,12 +64,12 @@ public class Randomizer implements Boundary {
         System.out.println("Hoeveel recepten wilt u?");
         int hoeveel = Integer.parseInt(readLine());
 
-        Map<Long, String> randomizedListWithCategories = randomizerService.getRandomizedListWithCategories(hoeveel, categories);
+        List<Recept> randomizedListWithCategories = randomizerService.getRandomizedListWithCategories(hoeveel, categories);
         if (randomizedListWithCategories == null) {
             System.out.println("Verkeerde invoer! Probeer het nogmaals");
             randomizeCategories();
         } else {
-            randomizedListWithCategories.forEach(printMapConsumer());
+            randomizedListWithCategories.forEach(printRecipeConsumer());
 
             vraagDetails(ReceptUtils::printRecept);
         }

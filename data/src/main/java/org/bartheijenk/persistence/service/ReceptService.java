@@ -52,9 +52,9 @@ public class ReceptService {
     /**
      * Gives a map of all recipes names with their respective IDs
      *
-     * @return a map of Long Ids with String names
+     * @return a List of Recipes
      */
-    public Map<Long, String> getAllReceptNamenEnID() {
+    public List<Recept> getAllReceptNamenEnID() {
         return receptDao.getReceptenNaamOpId();
     }
 
@@ -62,9 +62,9 @@ public class ReceptService {
      * Gives a map of all Recipe names with their respective IDs per Tag provided
      *
      * @param categorie the to be provided tag
-     * @return a map of Long IDs with String names
+     * @return a set of Recipes
      */
-    public Map<Long, String> getReceptNamenEnIDPerCategorie(Categorie categorie) {
+    public List<Recept> getReceptNamenEnIDPerCategorie(Categorie categorie) {
         return receptDao.getReceptenNaamOpIdPerCategorie(categorie);
     }
 

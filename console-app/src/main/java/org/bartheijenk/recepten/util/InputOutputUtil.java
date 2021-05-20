@@ -1,9 +1,10 @@
 package org.bartheijenk.recepten.util;
 
+import org.bartheijenk.persistence.entity.Recept;
+
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
-import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
 public class InputOutputUtil {
@@ -55,8 +56,8 @@ public class InputOutputUtil {
         }
     }
 
-    public static BiConsumer<Long, String> printMapConsumer() {
-        return (aLong, s) -> System.out.println("(" + aLong.toString() + ") " + s);
+    public static Consumer<? super Recept> printRecipeConsumer() {
+        return (obj) -> System.out.println("(" + obj.getId() + ") " + obj.getTitel());
     }
 
 

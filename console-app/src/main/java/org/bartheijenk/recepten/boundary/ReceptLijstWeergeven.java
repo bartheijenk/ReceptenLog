@@ -45,7 +45,7 @@ public class ReceptLijstWeergeven implements Boundary {
     }
 
     private void printAllRecepten() {
-        receptService.getAllReceptNamenEnID().forEach(printMapConsumer());
+        receptService.getAllReceptNamenEnID().forEach(printRecipeConsumer());
         vraagDetails(ReceptUtils::printRecept);
     }
 
@@ -63,7 +63,7 @@ public class ReceptLijstWeergeven implements Boundary {
             System.out.println("Gegeven categorie is niet gevonden, probeer het nogmaals.");
             vraagDetails(this::printCategorieRecepten);
         } else {
-            receptService.getReceptNamenEnIDPerCategorie(categorie).forEach(printMapConsumer());
+            receptService.getReceptNamenEnIDPerCategorie(categorie).forEach(printRecipeConsumer());
             vraagDetails(ReceptUtils::printRecept);
         }
     }

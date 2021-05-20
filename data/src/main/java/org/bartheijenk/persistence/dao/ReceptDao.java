@@ -5,10 +5,8 @@ import org.bartheijenk.persistence.entity.Recept;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
-import java.math.BigInteger;
-import java.util.HashMap;
+import javax.persistence.TypedQuery;
 import java.util.List;
-import java.util.Map;
 
 public class ReceptDao extends Dao<Recept, Long> {
 
@@ -25,25 +23,26 @@ public class ReceptDao extends Dao<Recept, Long> {
         return instance;
     }
 
-    public Map<Long, String> getReceptenNaamOpId() {
-        return queryToMap(em.createQuery("SELECT r.id, r.titel FROM Recept r"));
+    public List<Recept> getReceptenNaamOpId() {
+        return em.createQuery("SELECT r FROM Recept r", Recept.class).getResultList();
     }
 
-    public Map<Long, String> getReceptenNaamOpIdPerCategorie(Categorie categorie) {
-        Query query = em.createQuery("SELECT r.id, r.titel FROM Recept r where :categorie member of r.categories");
+    public List<Recept> getReceptenNaamOpIdPerCategorie(Categorie categorie) {
+        TypedQuery<Recept> query = em.createQuery("SELECT r FROM Recept r where :categorie member of r.categories",
+                Recept.class);
         query.setParameter("categorie", categorie);
-        return queryToMap(query);
+        return query.getResultList();
     }
 
-    public Map<Long, String> getRandomRecepten(int limit) {
+    public List<Recept> getRandomRecepten(int limit) {
         //MySQL specific query!!!!
-        Query query = em.createNativeQuery("SELECT r.id, r.titel FROM recipelog.recept r order by " +
+        Query query = em.createNativeQuery("SELECT * FROM recipelog.recept r order by " +
                 "RAND() LIMIT :limit");
         query.setParameter("limit", limit);
-        return queryToMap(query);
+        return query.getResultList();
     }
 
-    public Map<Long, String> getRandomRecepten(int limit, List<Categorie> categories) {
+    public List<Recept> getRandomRecepten(int limit, List<Categorie> categories) {
         //MySQL specific query!!!!
         StringBuilder s = new StringBuilder("SELECT r.id, r.titel FROM recipelog.recept r " +
                 "WHERE r.id in (" +
@@ -58,19 +57,6 @@ public class ReceptDao extends Dao<Recept, Long> {
         s.append(") order by RAND() LIMIT ").append(limit);
         Query query = em.createNativeQuery(s.toString());
 
-        return queryToMap(query);
-    }
-
-    @SuppressWarnings("unchecked")
-    private Map<Long, String> queryToMap(Query query) {
-        Map<Long, String> output = new HashMap<>();
-
-        List<Object[]> resultList = query.getResultList();
-        for (Object[] o : resultList) {
-            output.put(
-                    o[0] instanceof BigInteger ? ((BigInteger) o[0]).longValue() : (Long) o[0],
-                    o[1].toString());
-        }
-        return output;
+        return query.getResultList();
     }
 }
