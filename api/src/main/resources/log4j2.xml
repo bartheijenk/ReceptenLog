@@ -32,11 +32,11 @@
         <Logger name="org.hibernate" level="INFO"/>
 
         <!--to show binding parameter log statements:-->
-<!--        <Logger name="org.hibernate.type.descriptor.sql" level="TRACE"/>-->
+        <!--        <Logger name="org.hibernate.type.descriptor.sql" level="TRACE"/>-->
 
         <Root level="ERROR">
             <AppenderRef ref="console"/>
-            <AppenderRef ref="rollingFile"/>
+            <!--            <AppenderRef ref="rollingFile"/>-->
         </Root>
     </Loggers>
 </Configuration>

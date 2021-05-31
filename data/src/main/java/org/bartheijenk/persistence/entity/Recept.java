@@ -32,7 +32,7 @@ public class Recept implements Identifiable<Long> {
 
     @Builder.Default
     @OneToMany(
-            fetch = FetchType.LAZY,
+            fetch = FetchType.EAGER,
             cascade = CascadeType.ALL)
     @JoinColumn(name = "recept_id")
     @EqualsAndHashCode.Exclude

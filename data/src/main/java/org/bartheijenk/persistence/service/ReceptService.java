@@ -16,6 +16,13 @@ public class ReceptService {
 
     private static ReceptService instance;
 
+    public ReceptService() {
+        EntityManager em = EntityManagerProvider.getEntityManager();
+        receptDao = ReceptDao.getInstance(em);
+        ingredientDao = IngredientDao.getInstance(em);
+        categorieDao = CategorieDao.getInstance(em);
+    }
+
     public static ReceptService getInstance() {
         if (instance == null) {
             instance = new ReceptService(EntityManagerProvider.getEntityManager());
@@ -77,7 +84,6 @@ public class ReceptService {
     public Recept getReceptById(Long id) {
         return receptDao.find(id);
     }
-    //saves Tags if necessary then grabs them from the database to fill IDs
 
 
     /**
@@ -98,6 +104,15 @@ public class ReceptService {
         results.addAll(zoekOpLosseTermenInTitel(zoekTermen, recepten));
 
         return List.copyOf(results);
+    }
+
+    /**
+     * Deletes Recipe by id
+     *
+     * @param id the ID in Long
+     */
+    public void deleteRecept(Long id) {
+        receptDao.remove(getReceptById(id));
     }
 
     private List<Recept> zoekOpLosseTermenInTitel(String zoekTermen, List<Recept> recepten) {
@@ -128,7 +143,6 @@ public class ReceptService {
         recept.setCategories(categories);
     }
 
-    //saves ingredients if necessary then grabs them from the database to fill IDs
     private void mergeIngredienten(Recept recept) {
         Set<IngredientInRecept> ingredienten = recept.getIngredienten();
 
@@ -141,5 +155,10 @@ public class ReceptService {
             ingredientInRecept.setRecept(recept);
         }
         recept.setIngredienten(ingredienten);
+    }
+
+    public Recept updateRecept(Long id, Recept recept) {
+        //TODO too long didn't program
+        return null;
     }
 }
