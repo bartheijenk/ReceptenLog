@@ -4,24 +4,30 @@ import lombok.extern.log4j.Log4j2;
 import org.bartheijenk.persistence.entity.Identifiable;
 
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import java.lang.reflect.ParameterizedType;
 import java.util.List;
+import java.util.Optional;
 
 @Log4j2
 public abstract class Dao<E extends Identifiable<K>, K> {
 
+    @PersistenceContext(unitName = "MySQL-recipelog")
     protected EntityManager em;
 
     public Dao(EntityManager em) {
         this.em = em;
     }
 
+    public Dao() {
+    }
+
     public List<E> findAll() {
         return em.createNamedQuery(typeSimple() + ".findAll", E()).getResultList();
     }
 
-    public E find(K id) {
-        return em.find(E(), id);
+    public Optional<E> find(K id) {
+        return Optional.ofNullable(em.find(E(), id));
     }
 
     public void save(E e) {

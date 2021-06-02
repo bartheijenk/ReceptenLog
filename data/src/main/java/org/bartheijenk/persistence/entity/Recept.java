@@ -2,6 +2,7 @@ package org.bartheijenk.persistence.entity;
 
 import lombok.*;
 
+import javax.json.bind.annotation.JsonbProperty;
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
@@ -36,6 +37,7 @@ public class Recept implements Identifiable<Long> {
             cascade = CascadeType.ALL)
     @JoinColumn(name = "recept_id")
     @EqualsAndHashCode.Exclude
+    @JsonbProperty
     private Set<IngredientInRecept> ingredienten = new HashSet<>();
 
     @Singular

@@ -2,20 +2,12 @@ package org.bartheijenk.persistence.dao;
 
 import org.bartheijenk.persistence.entity.IngredientInRecept;
 
-import javax.persistence.EntityManager;
+import javax.ejb.Stateless;
+import javax.ejb.TransactionManagement;
+import javax.ejb.TransactionManagementType;
 
+@Stateless
+@TransactionManagement(TransactionManagementType.CONTAINER)
 public class IngredientInReceptDao extends Dao<IngredientInRecept, Long> {
 
-    private static IngredientInReceptDao instance;
-
-    private IngredientInReceptDao(EntityManager em) {
-        super(em);
-    }
-
-    public IngredientInReceptDao getInstance(EntityManager em) {
-        if (instance == null) {
-            instance = new IngredientInReceptDao(em);
-        }
-        return instance;
-    }
 }

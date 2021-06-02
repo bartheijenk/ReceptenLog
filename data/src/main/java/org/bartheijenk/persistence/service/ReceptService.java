@@ -7,45 +7,23 @@ import org.bartheijenk.persistence.entity.Categorie;
 import org.bartheijenk.persistence.entity.Ingredient;
 import org.bartheijenk.persistence.entity.IngredientInRecept;
 import org.bartheijenk.persistence.entity.Recept;
-import org.bartheijenk.persistence.util.EntityManagerProvider;
 
-import javax.persistence.EntityManager;
+import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
 import java.util.*;
 
-public class ReceptService {
+import static org.bartheijenk.persistence.util.RecordNotFoundUtil.throwRecordNotFound;
 
-    private static ReceptService instance;
+@ApplicationScoped
+public class ReceptService implements IReceptService {
 
-    public ReceptService() {
-        EntityManager em = EntityManagerProvider.getEntityManager();
-        receptDao = ReceptDao.getInstance(em);
-        ingredientDao = IngredientDao.getInstance(em);
-        categorieDao = CategorieDao.getInstance(em);
-    }
+    @Inject
+    private ReceptDao receptDao;
+    @Inject
+    private IngredientDao ingredientDao;
+    @Inject
+    private CategorieDao categorieDao;
 
-    public static ReceptService getInstance() {
-        if (instance == null) {
-            instance = new ReceptService(EntityManagerProvider.getEntityManager());
-        }
-        return instance;
-    }
-
-    private final ReceptDao receptDao;
-    private final IngredientDao ingredientDao;
-    private final CategorieDao categorieDao;
-
-    public ReceptService(EntityManager em) {
-        receptDao = ReceptDao.getInstance(em);
-        ingredientDao = IngredientDao.getInstance(em);
-        categorieDao = CategorieDao.getInstance(em);
-    }
-
-    /**
-     * Saves the recipe into the database
-     *
-     * @param recept The to save recipe
-     * @return returns the saved recipe
-     */
     public Recept saveRecept(Recept recept) {
         mergeIngredienten(recept);
         mergeCategories(recept);
@@ -55,43 +33,19 @@ public class ReceptService {
         return recept;
     }
 
-
-    /**
-     * Gives a map of all recipes names with their respective IDs
-     *
-     * @return a List of Recipes
-     */
     public List<Recept> getAllReceptNamenEnID() {
         return receptDao.getReceptenNaamOpId();
     }
 
-    /**
-     * Gives a map of all Recipe names with their respective IDs per Tag provided
-     *
-     * @param categorie the to be provided tag
-     * @return a set of Recipes
-     */
+    @Deprecated
     public List<Recept> getReceptNamenEnIDPerCategorie(Categorie categorie) {
         return receptDao.getReceptenNaamOpIdPerCategorie(categorie);
     }
 
-    /**
-     * Gets a recipe by its ID
-     *
-     * @param id the ID in Long
-     * @return the found recipe, returns null if nothing found
-     */
-    public Recept getReceptById(Long id) {
+    public Optional<Recept> getReceptById(Long id) {
         return receptDao.find(id);
     }
 
-
-    /**
-     * Gets a recipe by searching for specific terms
-     *
-     * @param zoekTermen search terms provided by the user
-     * @return a List of Recept results. Is an Empty list if nothing found
-     */
     public List<Recept> zoekRecepten(String zoekTermen) {
         Set<Recept> results = new LinkedHashSet<>();
         List<Recept> recepten = receptDao.findAll();
@@ -106,13 +60,19 @@ public class ReceptService {
         return List.copyOf(results);
     }
 
-    /**
-     * Deletes Recipe by id
-     *
-     * @param id the ID in Long
-     */
     public void deleteRecept(Long id) {
-        receptDao.remove(getReceptById(id));
+        getReceptById(id).ifPresentOrElse(receptDao::remove, throwRecordNotFound(id));
+    }
+
+    public Optional<Recept> updateRecept(Long id, Recept recept) {
+        Optional<Recept> oldOpt = getReceptById(id);
+        if (oldOpt.isPresent()) {
+            recept.setId(id);
+            receptDao.save(recept);
+            return getReceptById(id);
+        } else {
+            return oldOpt;
+        }
     }
 
     private List<Recept> zoekOpLosseTermenInTitel(String zoekTermen, List<Recept> recepten) {
@@ -155,10 +115,5 @@ public class ReceptService {
             ingredientInRecept.setRecept(recept);
         }
         recept.setIngredienten(ingredienten);
-    }
-
-    public Recept updateRecept(Long id, Recept recept) {
-        //TODO too long didn't program
-        return null;
     }
 }

@@ -1,30 +1,26 @@
 package org.bartheijenk.persistence.service;
 
 import org.bartheijenk.persistence.dao.CategorieDao;
+import org.bartheijenk.persistence.dao.ReceptDao;
 import org.bartheijenk.persistence.entity.Categorie;
-import org.bartheijenk.persistence.util.EntityManagerProvider;
+import org.bartheijenk.persistence.entity.Recept;
 
-import javax.persistence.EntityManager;
+import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
 import java.util.List;
+import java.util.Optional;
 
-public class CategorieService {
-    private static CategorieService instance;
+@ApplicationScoped
+public class CategorieService implements ICategorieService {
 
-    public static CategorieService getInstance() {
-        if (instance == null) {
-            instance = new CategorieService();
-        }
-        return instance;
-    }
+    private final CategorieDao categorieDao;
+    private final ReceptDao receptDao;
 
-    private CategorieDao categorieDao = CategorieDao.getInstance(EntityManagerProvider.getEntityManager());
+    @Inject
+    public CategorieService(CategorieDao categorieDao, ReceptDao receptDao) {
+        this.categorieDao = categorieDao;
+        this.receptDao = receptDao;
 
-    private CategorieService() {
-
-    }
-
-    private CategorieService(EntityManager em) {
-        categorieDao = CategorieDao.getInstance(em);
     }
 
     /**
@@ -42,7 +38,12 @@ public class CategorieService {
      * @param id the ID in Long
      * @return A Tag object or null
      */
-    public Categorie getTagById(Long id) {
+    public Optional<Categorie> getTagById(Long id) {
         return categorieDao.find(id);
+    }
+
+    public List<Recept> getReceptenOfCategorie(Categorie categorie) {
+        return receptDao.getReceptenNaamOpIdPerCategorie(categorie);
+
     }
 }
