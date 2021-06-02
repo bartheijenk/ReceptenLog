@@ -1,45 +1,45 @@
 package org.bartheijenk.recepten.api.resource;
 
 import org.bartheijenk.persistence.entity.Recept;
-import org.bartheijenk.persistence.service.ReceptService;
+import org.bartheijenk.persistence.service.IReceptService;
+import org.bartheijenk.persistence.util.RecordNotFoundException;
+import org.bartheijenk.recepten.api.util.Response;
 
 import javax.inject.Inject;
-import javax.ws.rs.*;
-import java.util.List;
+import javax.ws.rs.DELETE;
+import javax.ws.rs.GET;
+import javax.ws.rs.PUT;
 
-@Path("/recept")
 public class ReceptResource implements JsonResource {
 
     @Inject
-    private ReceptService receptService;
+    private IReceptService receptService;
 
-    @GET
-    public List<Recept> get(@QueryParam("q") String q) {
-        return q == null ?
-                receptService.getAllReceptNamenEnID() :
-                receptService.zoekRecepten(q);
+    private Long id;
+
+    public ReceptResource init(Long id) {
+        this.id = id;
+        return this;
     }
 
     @GET
-    @Path("{id}")
-    public Recept get(@PathParam("id") Long id) {
-        return receptService.getReceptById(id);
-    }
-
-    @POST
-    public Recept post(Recept recept) {
-        return receptService.saveRecept(recept);
+    public Recept get() {
+        return receptService.getReceptById(id)
+                .orElseThrow(() -> Response.badRequest(id));
     }
 
     @DELETE
-    @Path("{id}")
-    public void delete(@PathParam("id") Long id) {
-        receptService.deleteRecept(id);
+    public void delete() {
+        try {
+            receptService.deleteRecept(id);
+        } catch (RecordNotFoundException e) {
+            throw Response.badRequest(id);
+        }
     }
 
     @PUT
-    @Path("{id}")
-    public Recept update(@PathParam("id") Long id, Recept recept) {
-        return receptService.updateRecept(id, recept);
+    public Recept update(Recept recept) {
+        return receptService.updateRecept(id, recept)
+                .orElseThrow(() -> Response.badRequest(id));
     }
 }

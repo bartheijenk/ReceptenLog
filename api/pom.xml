@@ -4,6 +4,11 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
+    <parent>
+        <artifactId>java-recipe-log</artifactId>
+        <groupId>org.bartheijenk</groupId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
     <groupId>org.bartheijenk.recepten</groupId>
     <artifactId>api</artifactId>
     <version>1.0-SNAPSHOT</version>
@@ -77,42 +82,76 @@
             <version>1.0-SNAPSHOT</version>
             <scope>compile</scope>
         </dependency>
+        <dependency>
+            <groupId>org.glassfish.jersey.media</groupId>
+            <artifactId>jersey-media-json-jackson</artifactId>
+            <version>2.17</version>
+        </dependency>
     </dependencies>
 
-    <build>
-        <plugins>
-            <!-- Run and verify ...IT.java-tests -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-failsafe-plugin</artifactId>
-            </plugin>
-            <!-- Download WebSphere Liberty to target directory and start it -->
-            <!-- See test/resources/arquillian.xml and server.xml for configuration -->
-            <plugin>
-                <groupId>net.wasdev.wlp.maven.plugins</groupId>
-                <artifactId>liberty-maven-plugin</artifactId>
-                <version>3.0.M1</version>
-                <configuration>
-                    <assemblyArtifact>
-                        <!-- Liberty server to run test against -->
-                        <groupId>io.openliberty</groupId>
-                        <artifactId>openliberty-runtime</artifactId>
-                        <version>20.0.0.12</version>
-                        <type>zip</type>
-                    </assemblyArtifact>
-                    <configFile>src/test/resources/server.xml</configFile> <!-- Used to run Arquillian-->
-                </configuration>
-                <executions>
-                    <!-- Create server during package phase for running the application AND Arquillian -->
-                    <execution>
-                        <phase>pre-integration-test</phase>
-                        <goals>
-                            <goal>create-server</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
+    <!--    <build>-->
+    <!--        <plugins>-->
+    <!--            &lt;!&ndash; Run and verify ...IT.java-tests &ndash;&gt;-->
+    <!--            <plugin>-->
+    <!--                <groupId>org.apache.maven.plugins</groupId>-->
+    <!--                <artifactId>maven-failsafe-plugin</artifactId>-->
+    <!--            </plugin>-->
+    <!--            &lt;!&ndash; Download WebSphere Liberty to target directory and start it &ndash;&gt;-->
+    <!--            &lt;!&ndash; See test/resources/arquillian.xml and server.xml for configuration &ndash;&gt;-->
+    <!--            <plugin>-->
+    <!--                <groupId>net.wasdev.wlp.maven.plugins</groupId>-->
+    <!--                <artifactId>liberty-maven-plugin</artifactId>-->
+    <!--                <version>3.0.M1</version>-->
+    <!--                <configuration>-->
+    <!--                    <assemblyArtifact>-->
+    <!--                        &lt;!&ndash; Liberty server to run test against &ndash;&gt;-->
+    <!--                        <groupId>io.openliberty</groupId>-->
+    <!--                        <artifactId>openliberty-runtime</artifactId>-->
+    <!--                        <version>20.0.0.12</version>-->
+    <!--                        <type>zip</type>-->
+    <!--                    </assemblyArtifact>-->
+    <!--                    <configFile>src/test/resources/server.xml</configFile> &lt;!&ndash; Used to run Arquillian&ndash;&gt;-->
+    <!--                </configuration>-->
+    <!--                <executions>-->
+    <!--                    &lt;!&ndash; Create server during package phase for running the application AND Arquillian &ndash;&gt;-->
+    <!--                    <execution>-->
+    <!--                        <phase>pre-integration-test</phase>-->
+    <!--                        <goals>-->
+    <!--                            <goal>create-server</goal>-->
+    <!--                        </goals>-->
+    <!--                    </execution>-->
+    <!--                </executions>-->
+    <!--            </plugin>-->
 
-        </plugins>
-    </build>
+    <!--            <plugin>-->
+    <!--                <groupId>org.apache.maven.plugins</groupId>-->
+    <!--                <artifactId>maven-dependency-plugin</artifactId>-->
+    <!--                <version>2.8</version>-->
+    <!--                <executions>-->
+    <!--                    <execution>-->
+    <!--                        <id>copy</id>-->
+    <!--                        <phase>pre-integration-test</phase>-->
+    <!--                        <goals>-->
+    <!--                            <goal>copy</goal>-->
+    <!--                        </goals>-->
+    <!--                    </execution>-->
+    <!--                </executions>-->
+    <!--                <configuration>-->
+    <!--                    <artifactItems>-->
+    <!--                        <artifactItem>-->
+    <!--                            <groupId>com.h2database</groupId>-->
+    <!--                            <artifictId>h2</artifictId>-->
+    <!--                            <version>1.4.200</version>-->
+    <!--                            <type>jar</type>-->
+    <!--                            <overWrite>false</overWrite>-->
+    <!--                            <outputDirectory>${project.build.directory}/liberty/wlp/usr/shared-->
+    <!--                                /config/lib</outputDirectory>-->
+    <!--                            <destFileName>h2.jar</destFileName>-->
+    <!--                        </artifactItem>-->
+    <!--                    </artifactItems>-->
+    <!--                </configuration>-->
+    <!--            </plugin>-->
+
+    <!--        </plugins>-->
+    <!--    </build>-->
 </project>
