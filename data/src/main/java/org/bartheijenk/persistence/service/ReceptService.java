@@ -33,7 +33,7 @@ public class ReceptService implements IReceptService {
         return recept;
     }
 
-    public List<Recept> getAllReceptNamenEnID() {
+    public List<Recept> getAllRecepten() {
         return receptDao.getReceptenNaamOpId();
     }
 

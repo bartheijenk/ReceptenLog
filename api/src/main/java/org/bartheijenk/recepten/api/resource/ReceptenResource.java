@@ -2,6 +2,7 @@ package org.bartheijenk.recepten.api.resource;
 
 import org.bartheijenk.persistence.entity.Recept;
 import org.bartheijenk.persistence.service.IReceptService;
+import org.bartheijenk.recepten.api.filter.Authorized;
 
 import javax.inject.Inject;
 import javax.ws.rs.*;
@@ -19,11 +20,12 @@ public class ReceptenResource implements JsonResource {
     @GET
     public List<Recept> get(@QueryParam("q") String q) {
         return q == null ?
-                receptService.getAllReceptNamenEnID() :
+                receptService.getAllRecepten() :
                 receptService.zoekRecepten(q);
     }
 
     @POST
+    @Authorized
     public Recept post(Recept recept) {
         return receptService.saveRecept(recept);
     }

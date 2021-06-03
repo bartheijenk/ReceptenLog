@@ -23,7 +23,6 @@ public class CategorieResource implements JsonResource {
         return this;
     }
 
-
     @GET
     public Categorie getCategorieById() {
         return categorieService.getTagById(id)

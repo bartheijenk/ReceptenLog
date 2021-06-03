@@ -22,22 +22,10 @@ public class CategorieService implements ICategorieService {
         this.receptDao = receptDao;
 
     }
-
-    /**
-     * Gives a list of all tags
-     *
-     * @return a List of Tag objects
-     */
     public List<Categorie> getAllCategories() {
         return categorieDao.findAll();
     }
 
-    /**
-     * Gives a Tag object with specified ID
-     *
-     * @param id the ID in Long
-     * @return A Tag object or null
-     */
     public Optional<Categorie> getTagById(Long id) {
         return categorieDao.find(id);
     }

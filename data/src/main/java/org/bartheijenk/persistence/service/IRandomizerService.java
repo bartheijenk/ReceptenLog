@@ -12,7 +12,7 @@ public interface IRandomizerService {
      * @param limit how many recipes should be gotten
      * @return a Map of Long Ids with String names of recipes
      */
-    public List<Recept> getRandomizedList(int limit);
+    List<Recept> getRandomizedList(int limit);
 
     /**
      * Returns a random map of recipes based on provided tags
@@ -21,5 +21,5 @@ public interface IRandomizerService {
      * @param tagIds A List of Long Ids of tags
      * @return returns a Map of Long Ids and String names of recipes or null if no tags are found for the IDs
      */
-    public List<Recept> getRandomizedListWithCategories(int limit, List<Long> tagIds);
+    List<Recept> getRandomizedListWithCategories(int limit, List<Long> tagIds);
 }

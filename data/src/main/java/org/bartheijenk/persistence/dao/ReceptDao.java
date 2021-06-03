@@ -29,9 +29,9 @@ public class ReceptDao extends Dao<Recept, Long> {
     public List<Recept> getRandomRecepten(int limit) {
         //MySQL specific query!!!!
         Query query = em.createNativeQuery("SELECT * FROM recipelog.recept r order by " +
-                "RAND() LIMIT :limit");
-        query.setParameter("limit", limit);
-        return query.getResultList();
+                "RAND() LIMIT " + limit, Recept.class);
+//        query.setParameter("limit", limit);
+        return (List<Recept>) query.getResultList();
     }
 
     public List<Recept> getRandomRecepten(int limit, List<Categorie> categories) {
@@ -47,8 +47,8 @@ public class ReceptDao extends Dao<Recept, Long> {
         }
 
         s.append(") order by RAND() LIMIT ").append(limit);
-        Query query = em.createNativeQuery(s.toString());
+        Query query = em.createNativeQuery(s.toString(), Recept.class);
 
-        return query.getResultList();
+        return (List<Recept>) query.getResultList();
     }
 }

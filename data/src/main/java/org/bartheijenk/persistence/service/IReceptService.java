@@ -13,7 +13,7 @@ public interface IReceptService {
      *
      * @return a List of Recipes
      */
-    List<Recept> getAllReceptNamenEnID();
+    List<Recept> getAllRecepten();
 
     /**
      * Gets a recipe by searching for specific terms
