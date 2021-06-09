@@ -9,7 +9,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import java.util.List;
 
-@Path("/categorie")
+@Path("/categories")
 public class CategoriesResource implements JsonResource {
 
     @Inject

@@ -42,10 +42,7 @@ public class Recept implements Identifiable<Long> {
 
     @Singular
     @ManyToMany(
-            cascade = {
-                    CascadeType.PERSIST,
-                    CascadeType.MERGE
-            })
+            )
     @JoinTable(name = "recept_categorie",
             joinColumns = @JoinColumn(name = "recept_id"),
             inverseJoinColumns = @JoinColumn(name = "categorie_id")

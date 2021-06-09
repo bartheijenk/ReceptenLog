@@ -30,7 +30,7 @@ public class CategorieResource implements JsonResource {
     }
 
     @GET
-    @Path("/recept")
+    @Path("/recepten")
     public List<Recept> getReceptenOfCategorie() {
         return categorieService.getReceptenOfCategorie(getCategorieById());
     }

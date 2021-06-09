@@ -15,12 +15,6 @@ public abstract class Dao<E extends Identifiable<K>, K> {
     @PersistenceContext(unitName = "MySQL-recipelog")
     protected EntityManager em;
 
-    public Dao(EntityManager em) {
-        this.em = em;
-    }
-
-    public Dao() {
-    }
 
     public List<E> findAll() {
         return em.createNamedQuery(typeSimple() + ".findAll", E()).getResultList();
@@ -31,26 +25,15 @@ public abstract class Dao<E extends Identifiable<K>, K> {
     }
 
     public void save(E e) {
-        try {
-            em.getTransaction().begin();
             em.persist(e);
-            em.getTransaction().commit();
-        } catch (Exception exception) {
-            exception.printStackTrace();
-        }
     }
 
     public E update(E e) {
-        em.getTransaction().begin();
-        E mergedE = em.merge(e);
-        em.getTransaction().commit();
-        return mergedE;
+        return em.merge(e);
     }
 
     public void remove(E e) {
-        em.getTransaction().begin();
         em.remove(e.getId());
-        em.getTransaction().commit();
     }
 
     public Boolean contains(E e) {
