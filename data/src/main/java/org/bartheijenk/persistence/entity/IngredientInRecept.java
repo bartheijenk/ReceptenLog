@@ -1,5 +1,6 @@
 package org.bartheijenk.persistence.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
 
 import javax.persistence.*;
@@ -33,6 +34,7 @@ public class IngredientInRecept implements Identifiable<Long> {
     @ManyToOne
     @JoinColumn(name = "recept_id", insertable = false, updatable = false)
     @ToString.Exclude
+    @JsonBackReference
     private Recept recept;
 
 }

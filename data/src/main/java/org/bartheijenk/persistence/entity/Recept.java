@@ -2,6 +2,7 @@ package org.bartheijenk.persistence.entity;
 
 import lombok.*;
 
+import javax.json.bind.annotation.JsonbProperty;
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
@@ -32,18 +33,16 @@ public class Recept implements Identifiable<Long> {
 
     @Builder.Default
     @OneToMany(
-            fetch = FetchType.LAZY,
+            fetch = FetchType.EAGER,
             cascade = CascadeType.ALL)
     @JoinColumn(name = "recept_id")
     @EqualsAndHashCode.Exclude
+    @JsonbProperty
     private Set<IngredientInRecept> ingredienten = new HashSet<>();
 
     @Singular
     @ManyToMany(
-            cascade = {
-                    CascadeType.PERSIST,
-                    CascadeType.MERGE
-            })
+            )
     @JoinTable(name = "recept_categorie",
             joinColumns = @JoinColumn(name = "recept_id"),
             inverseJoinColumns = @JoinColumn(name = "categorie_id")

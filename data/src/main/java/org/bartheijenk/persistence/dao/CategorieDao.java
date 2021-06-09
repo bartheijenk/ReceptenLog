@@ -3,26 +3,17 @@ package org.bartheijenk.persistence.dao;
 import lombok.extern.log4j.Log4j2;
 import org.bartheijenk.persistence.entity.Categorie;
 
-import javax.persistence.EntityManager;
+import javax.ejb.Stateless;
+import javax.ejb.TransactionManagement;
+import javax.ejb.TransactionManagementType;
 import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
 import java.util.List;
 
 @Log4j2
+@Stateless
+@TransactionManagement(TransactionManagementType.CONTAINER)
 public class CategorieDao extends Dao<Categorie, Long> {
-
-    private static CategorieDao instance;
-
-    private CategorieDao(EntityManager em) {
-        super(em);
-    }
-
-    public static CategorieDao getInstance(EntityManager em) {
-        if (instance == null) {
-            instance = new CategorieDao(em);
-        }
-        return instance;
-    }
 
     public void saveIfNotExists(Categorie categorie) {
         if (findByNaam(categorie.getNaam()) == null) {

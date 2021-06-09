@@ -3,24 +3,19 @@ package org.bartheijenk.persistence.dao;
 import lombok.extern.log4j.Log4j2;
 import org.bartheijenk.persistence.entity.Ingredient;
 
-import javax.persistence.EntityManager;
+import javax.ejb.Stateless;
+import javax.ejb.TransactionManagement;
+import javax.ejb.TransactionManagementType;
 import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
 
 @Log4j2
+
+@Stateless
+@TransactionManagement(TransactionManagementType.CONTAINER)
 public class IngredientDao extends Dao<Ingredient, Long> {
 
-    private static IngredientDao instance;
-
-    private IngredientDao(EntityManager em) {
-        super(em);
-    }
-
-    public static IngredientDao getInstance(EntityManager em) {
-        if (instance == null) {
-            instance = new IngredientDao(em);
-        }
-        return instance;
+    public IngredientDao() {
     }
 
     public Ingredient findByName(String naam) {

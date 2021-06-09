@@ -3,25 +3,17 @@ package org.bartheijenk.persistence.dao;
 import org.bartheijenk.persistence.entity.Categorie;
 import org.bartheijenk.persistence.entity.Recept;
 
-import javax.persistence.EntityManager;
+import javax.ejb.Stateless;
+import javax.ejb.TransactionManagement;
+import javax.ejb.TransactionManagementType;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import java.util.List;
 
+
+@Stateless
+@TransactionManagement(TransactionManagementType.CONTAINER)
 public class ReceptDao extends Dao<Recept, Long> {
-
-    private static ReceptDao instance;
-
-    private ReceptDao(EntityManager em) {
-        super(em);
-    }
-
-    public static ReceptDao getInstance(EntityManager em) {
-        if (instance == null) {
-            instance = new ReceptDao(em);
-        }
-        return instance;
-    }
 
     public List<Recept> getReceptenNaamOpId() {
         return em.createQuery("SELECT r FROM Recept r", Recept.class).getResultList();
@@ -37,9 +29,9 @@ public class ReceptDao extends Dao<Recept, Long> {
     public List<Recept> getRandomRecepten(int limit) {
         //MySQL specific query!!!!
         Query query = em.createNativeQuery("SELECT * FROM recipelog.recept r order by " +
-                "RAND() LIMIT :limit");
-        query.setParameter("limit", limit);
-        return query.getResultList();
+                "RAND() LIMIT " + limit, Recept.class);
+//        query.setParameter("limit", limit);
+        return (List<Recept>) query.getResultList();
     }
 
     public List<Recept> getRandomRecepten(int limit, List<Categorie> categories) {
@@ -55,8 +47,8 @@ public class ReceptDao extends Dao<Recept, Long> {
         }
 
         s.append(") order by RAND() LIMIT ").append(limit);
-        Query query = em.createNativeQuery(s.toString());
+        Query query = em.createNativeQuery(s.toString(), Recept.class);
 
-        return query.getResultList();
+        return (List<Recept>) query.getResultList();
     }
 }
