@@ -37,10 +37,4 @@ public class CategorieDao extends Dao<Categorie, Long> {
         query.setParameter("categorieNames", categorieNames);
         return query.getResultList();
     }
-
-    public List<Categorie> findAllById(List<Long> categorieIds) {
-        TypedQuery<Categorie> query = em.createQuery("select t from Categorie t where t.id in :categorieIds", Categorie.class);
-        query.setParameter("categorieIds", categorieIds);
-        return query.getResultList();
-    }
 }

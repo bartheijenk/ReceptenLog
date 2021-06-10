@@ -5,6 +5,7 @@ import org.bartheijenk.persistence.entity.Identifiable;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 import java.lang.reflect.ParameterizedType;
 import java.util.List;
 import java.util.Optional;
@@ -20,12 +21,22 @@ public abstract class Dao<E extends Identifiable<K>, K> {
         return em.createNamedQuery(typeSimple() + ".findAll", E()).getResultList();
     }
 
+    public List<E> findAllById(List<K> ids) {
+        if (ids.isEmpty()) {
+            return null;
+        } else {
+            TypedQuery<E> query = em.createNamedQuery(typeSimple() + ".findAllByIds", E());
+            query.setParameter("ids", ids);
+            return query.getResultList();
+        }
+    }
+
     public Optional<E> find(K id) {
         return Optional.ofNullable(em.find(E(), id));
     }
 
     public void save(E e) {
-            em.persist(e);
+        em.persist(e);
     }
 
     public E update(E e) {

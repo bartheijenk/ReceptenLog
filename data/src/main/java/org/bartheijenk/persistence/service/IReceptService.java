@@ -21,7 +21,7 @@ public interface IReceptService {
      * @param q search terms provided by the user
      * @return a List of Recept results. Is an Empty list if nothing found
      */
-    List<Recept> zoekRecepten(String q);
+    List<Recept> zoekReceptenOpTitel(String q);
 
     /**
      * Gets a recipe by its ID
@@ -62,4 +62,8 @@ public interface IReceptService {
      * @return a List of Recipes
      */
     List<Recept> getReceptNamenEnIDPerCategorie(Categorie categorie);
+
+
+    List<Recept> getReceptenByQuery(List<Long> cats, List<Long> ingrs, List<String> brons,
+                                    int minServings, int maxServings);
 }

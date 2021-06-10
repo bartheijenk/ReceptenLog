@@ -13,7 +13,8 @@ import javax.persistence.*;
 @AllArgsConstructor
 @Entity
 @NamedQueries({
-        @NamedQuery(name = "Ingredient.findAll", query = "select r from Ingredient r")
+        @NamedQuery(name = "Ingredient.findAll", query = "select r from Ingredient r"),
+        @NamedQuery(name = "Ingredient.findAllByIds", query = "select t from Ingredient t where t.id in :ids")
 })
 public class Ingredient implements Identifiable<Long> {
 

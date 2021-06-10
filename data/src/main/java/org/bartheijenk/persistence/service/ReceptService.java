@@ -2,6 +2,7 @@ package org.bartheijenk.persistence.service;
 
 import org.bartheijenk.persistence.dao.CategorieDao;
 import org.bartheijenk.persistence.dao.IngredientDao;
+import org.bartheijenk.persistence.dao.IngredientInReceptDao;
 import org.bartheijenk.persistence.dao.ReceptDao;
 import org.bartheijenk.persistence.entity.Categorie;
 import org.bartheijenk.persistence.entity.Ingredient;
@@ -11,6 +12,7 @@ import org.bartheijenk.persistence.entity.Recept;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import java.util.*;
+import java.util.stream.Collectors;
 
 import static org.bartheijenk.persistence.util.RecordNotFoundUtil.throwRecordNotFound;
 
@@ -23,6 +25,8 @@ public class ReceptService implements IReceptService {
     private IngredientDao ingredientDao;
     @Inject
     private CategorieDao categorieDao;
+    @Inject
+    private IngredientInReceptDao ingredientInReceptDao;
 
     public Recept saveRecept(Recept recept) {
         mergeIngredienten(recept);
@@ -42,11 +46,30 @@ public class ReceptService implements IReceptService {
         return receptDao.getReceptenNaamOpIdPerCategorie(categorie);
     }
 
+    @Override
+    public List<Recept> getReceptenByQuery(List<Long> cats, List<Long> ingrs, List<String> brons,
+                                           int minServings, int maxServings) {
+        List<Recept> allRecepten = getAllRecepten();
+        List<Categorie> categories = this.categorieDao.findAllById(cats);
+        List<Ingredient> ingredients = this.ingredientDao.findAllById(ingrs);
+
+        return allRecepten.stream()
+                .filter(r -> categories == null || r.getCategories().containsAll(categories))
+                .filter(r -> ingredients == null || r.getIngredienten().stream()
+                        .filter(i -> ingredients.contains(i.getIngredient()))
+                        .count() >= ingredients.size()
+                )
+                .filter(r -> brons.isEmpty() || brons.contains(r.getBron()))
+                .filter(r -> minServings == 0 || minServings <= r.getServings())
+                .filter(r -> maxServings == 0 || r.getServings() <= maxServings)
+                .collect(Collectors.toList());
+    }
+
     public Optional<Recept> getReceptById(Long id) {
         return receptDao.find(id);
     }
 
-    public List<Recept> zoekRecepten(String zoekTermen) {
+    public List<Recept> zoekReceptenOpTitel(String zoekTermen) {
         Set<Recept> results = new LinkedHashSet<>();
         List<Recept> recepten = receptDao.findAll();
         String finalZoekTermen = zoekTermen.toLowerCase(Locale.ROOT);

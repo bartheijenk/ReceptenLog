@@ -17,10 +17,22 @@ public class ReceptenResource implements JsonResource {
     private ReceptResource receptResource;
 
     @GET
-    public List<Recept> get(@QueryParam("q") String q) {
-        return q == null ?
-                receptService.getAllRecepten() :
-                receptService.zoekRecepten(q);
+    public List<Recept> get(
+            @QueryParam("q") String q,
+            @QueryParam("filter") Boolean filter,
+            @QueryParam("cats") List<Long> cats,
+            @QueryParam("ingr") List<Long> ingr,
+            @QueryParam("bron") List<String> bron,
+            @QueryParam("minSer") int minSer,
+            @QueryParam("maxSer") int maxSer
+    ) {
+        if (filter != null) {
+            return receptService.getReceptenByQuery(cats, ingr, bron, minSer, maxSer);
+        } else {
+            return q == null ?
+                    receptService.getAllRecepten() :
+                    receptService.zoekReceptenOpTitel(q);
+        }
     }
 
     @POST

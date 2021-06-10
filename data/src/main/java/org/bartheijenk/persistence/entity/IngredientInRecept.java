@@ -12,7 +12,8 @@ import javax.persistence.*;
 @Entity
 @Table(name = "ingredientinrecept")
 @NamedQueries({
-        @NamedQuery(name = "IngredientInRecept.findAll", query = "select r from IngredientInRecept r")
+        @NamedQuery(name = "IngredientInRecept.findAll", query = "select r from IngredientInRecept r"),
+        @NamedQuery(name = "IngredientInRecept.findAllByIds", query = "select t from IngredientInRecept t where t.id in :ids")
 })
 public class IngredientInRecept implements Identifiable<Long> {
 
