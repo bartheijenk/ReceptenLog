@@ -27,7 +27,7 @@ public class ReceptenResource implements JsonResource {
             @QueryParam("maxSer") int maxSer
     ) {
         if (filter != null) {
-            return receptService.getReceptenByQuery(cats, ingr, bron, minSer, maxSer);
+            return receptService.getReceptenByQuery(q, cats, ingr, bron, minSer, maxSer);
         } else {
             return q == null ?
                     receptService.getAllRecepten() :

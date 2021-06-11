@@ -64,6 +64,6 @@ public interface IReceptService {
     List<Recept> getReceptNamenEnIDPerCategorie(Categorie categorie);
 
 
-    List<Recept> getReceptenByQuery(List<Long> cats, List<Long> ingrs, List<String> brons,
+    List<Recept> getReceptenByQuery(String q, List<Long> cats, List<Long> ingrs, List<String> brons,
                                     int minServings, int maxServings);
 }

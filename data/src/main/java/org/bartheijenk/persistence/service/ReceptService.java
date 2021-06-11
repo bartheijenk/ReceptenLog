@@ -47,9 +47,9 @@ public class ReceptService implements IReceptService {
     }
 
     @Override
-    public List<Recept> getReceptenByQuery(List<Long> cats, List<Long> ingrs, List<String> brons,
+    public List<Recept> getReceptenByQuery(String q, List<Long> cats, List<Long> ingrs, List<String> brons,
                                            int minServings, int maxServings) {
-        List<Recept> allRecepten = getAllRecepten();
+        List<Recept> allRecepten = q == null ? getAllRecepten() : zoekReceptenOpTitel(q);
         List<Categorie> categories = this.categorieDao.findAllById(cats);
         List<Ingredient> ingredients = this.ingredientDao.findAllById(ingrs);
 
