@@ -42,7 +42,7 @@ public class Recept implements Identifiable<Long> {
 
     @Singular
     @ManyToMany(
-            )
+    )
     @JoinTable(name = "recept_categorie",
             joinColumns = @JoinColumn(name = "recept_id"),
             inverseJoinColumns = @JoinColumn(name = "categorie_id")
@@ -53,4 +53,5 @@ public class Recept implements Identifiable<Long> {
         ingredientInRecept.setRecept(this);
         ingredienten.add(ingredientInRecept);
     }
+
 }
