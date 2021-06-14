@@ -26,6 +26,7 @@ public class ReceptDao extends Dao<Recept, Long> {
         return query.getResultList();
     }
 
+    @SuppressWarnings("unchecked")
     public List<Recept> getRandomRecepten(int limit) {
         //MySQL specific query!!!!
         Query query = em.createNativeQuery("SELECT * FROM recipelog.recept r order by " +
@@ -34,6 +35,7 @@ public class ReceptDao extends Dao<Recept, Long> {
         return (List<Recept>) query.getResultList();
     }
 
+    @SuppressWarnings("unchecked")
     public List<Recept> getRandomRecepten(int limit, List<Categorie> categories) {
 
         /*SELECT r.* FROM recipelog.recept r
