@@ -35,18 +35,28 @@ public class ReceptDao extends Dao<Recept, Long> {
     }
 
     public List<Recept> getRandomRecepten(int limit, List<Categorie> categories) {
+
+        /*SELECT r.* FROM recipelog.recept r
+join recept_categorie rc on (r.id = rc.recept_id)
+where rc.categorie_id in (select c.id from categorie c where c.id = 7 or c.id = 9)
+group by r.id
+having count(distinct rc.categorie_id) = 2*/
+
         //MySQL specific query!!!!
-        StringBuilder s = new StringBuilder("SELECT r.id, r.titel FROM recipelog.recept r " +
-                "WHERE r.id in (" +
-                "SELECT rt.recept_id FROM recipelog.recept_categorie rt where");
+        StringBuilder s = new StringBuilder(" SELECT r.* FROM recipelog.recept r " +
+                " join recept_categorie rc on (r.id = rc.recept_id) " +
+                " where rc.categorie_id in (select c.id from categorie c where ");
         for (int i = 0; i < categories.size(); i++) {
             if (i == 0)
-                s.append(" rt.categorie_id = ").append(categories.get(i).getId().toString());
+                s.append(" c.id = ").append(categories.get(i).getId().toString());
             else
-                s.append(" or rt.categorie_id = ").append(categories.get(i).getId().toString());
+                s.append(" or c.id = ").append(categories.get(i).getId().toString());
         }
 
-        s.append(") order by RAND() LIMIT ").append(limit);
+        s.append(" ) group by r.id having count(distinct rc.categorie_id) = ")
+                .append(categories.size())
+                .append(" order by RAND() LIMIT ")
+                .append(limit);
         Query query = em.createNativeQuery(s.toString(), Recept.class);
 
         return (List<Recept>) query.getResultList();
