@@ -55,14 +55,22 @@ public class ReceptService implements IReceptService {
 
         return allRecepten.stream()
                 .filter(r -> categories == null || r.getCategories().containsAll(categories))
-                .filter(r -> ingredients == null || r.getIngredienten().stream()
-                        .filter(i -> ingredients.contains(i.getIngredient()))
-                        .count() >= ingredients.size()
-                )
+                .filter(r -> ingredients == null || ingredienentIsInRecept(ingredients, r))
                 .filter(r -> brons.isEmpty() || brons.contains(r.getBron()))
                 .filter(r -> minServings == 0 || minServings <= r.getServings())
                 .filter(r -> maxServings == 0 || r.getServings() <= maxServings)
                 .collect(Collectors.toList());
+    }
+
+    private boolean ingredienentIsInRecept(List<Ingredient> ingredients, Recept r) {
+        List<Long> longs = ingredients.stream()
+                .map(Ingredient::getId)
+                .collect(Collectors.toList());
+        List<Long> inReceptIds = r.getIngredienten().stream()
+                .map(i -> i.getIngredient().getId())
+                .collect(Collectors.toList());
+        boolean containsAll = inReceptIds.containsAll(longs);
+        return containsAll;
     }
 
     public Optional<Recept> getReceptById(Long id) {

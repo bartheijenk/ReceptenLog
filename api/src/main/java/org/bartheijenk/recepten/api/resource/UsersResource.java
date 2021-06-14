@@ -2,6 +2,7 @@ package org.bartheijenk.recepten.api.resource;
 
 import org.bartheijenk.persistence.entity.User;
 import org.bartheijenk.persistence.service.IUserService;
+import org.bartheijenk.recepten.api.payload.LoginResponse;
 import org.bartheijenk.recepten.api.util.JwtUtil;
 
 import javax.inject.Inject;
@@ -24,15 +25,15 @@ public class UsersResource implements JsonResource {
 
     @POST
     @Path("/login")
-    public User login(User u) {
+    public LoginResponse login(User u) {
         try {
             if (!u.getUsername().equals("User")) {
                 User user = userService.authenticate(u.getUsername(), u.getPassword());
                 String token = jwtUtil.issueToken(u.getUsername(), uriInfo);
-                user.setToken(token);
-                user.setPassword("");
+                LoginResponse response = new LoginResponse(user);
+                response.setToken(token);
 
-                return user;
+                return response;
             } else {
                 throw new Exception();
             }

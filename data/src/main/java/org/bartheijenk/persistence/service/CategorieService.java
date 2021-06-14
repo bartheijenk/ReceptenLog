@@ -7,6 +7,7 @@ import org.bartheijenk.persistence.entity.Recept;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,7 +24,9 @@ public class CategorieService implements ICategorieService {
 
     }
     public List<Categorie> getAllCategories() {
-        return categorieDao.findAll();
+        List<Categorie> categories = categorieDao.findAll();
+        categories.sort(Comparator.comparing(Categorie::getNaam));
+        return categories;
     }
 
     public Optional<Categorie> getTagById(Long id) {
