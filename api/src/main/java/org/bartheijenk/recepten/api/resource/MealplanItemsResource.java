@@ -40,8 +40,19 @@ public class MealplanItemsResource implements JsonResource {
         return mealplanService.addMealplanItem(mealplanItem);
     }
 
-    @Path("{id}")
-    public MealplanItemResource getById(@PathParam("id") Long id) {
-        return this.mealplanItemResource.init(id);
-    }
+//    @PUT
+//    @Path("{id}")
+//    public MealplanItem changeDate(@PathParam("id") Long id, MealplanItem item) {
+//        try {
+//
+//            return mealplanService.changeDateTo(id, item.getDate());
+//        } catch (RecordNotFoundException e) {
+//            throw Response.badRequest(id);
+//        }
+//    }
+//
+@Path("{id}")
+public MealplanItemResource getById(@PathParam("id") Long id) {
+    return this.mealplanItemResource.init(id);
+}
 }

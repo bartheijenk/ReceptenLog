@@ -9,9 +9,9 @@ import javax.inject.Inject;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.PUT;
-import java.time.LocalDate;
 
 import static org.bartheijenk.recepten.api.util.Response.badRequest;
+
 
 public class MealplanItemResource implements JsonResource {
 
@@ -30,9 +30,10 @@ public class MealplanItemResource implements JsonResource {
     }
 
     @PUT
-    public MealplanItem changeDate(LocalDate date) {
+    public MealplanItem changeDate(MealplanItem item) {
         try {
-            return mealplanService.changeDateTo(id, date);
+
+            return mealplanService.changeDateTo(id, item.getDate());
         } catch (RecordNotFoundException e) {
             throw Response.badRequest(id);
         }
