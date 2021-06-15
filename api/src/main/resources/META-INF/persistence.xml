@@ -12,6 +12,7 @@
         <class>org.bartheijenk.persistence.entity.IngredientInRecept</class>
         <class>org.bartheijenk.persistence.entity.Categorie</class>
         <class>org.bartheijenk.persistence.entity.User</class>
+        <class>org.bartheijenk.persistence.entity.MealplanItem</class>
 
         <properties>
             <property name="eclipselink.ddl-generation" value="create-or-extend-tables"/>

@@ -35,8 +35,9 @@ public abstract class Dao<E extends Identifiable<K>, K> {
         return Optional.ofNullable(em.find(E(), id));
     }
 
-    public void save(E e) {
+    public E save(E e) {
         em.persist(e);
+        return e;
     }
 
     public E update(E e) {
