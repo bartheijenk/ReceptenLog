@@ -7,6 +7,10 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
+
+import static org.bartheijenk.persistence.util.RecordNotFoundUtil.recordNotFound;
+import static org.bartheijenk.persistence.util.RecordNotFoundUtil.throwRecordNotFound;
 
 @ApplicationScoped
 public class MealplanService implements IMealplanService {
@@ -22,5 +26,23 @@ public class MealplanService implements IMealplanService {
     @Override
     public List<MealplanItem> getAll(LocalDate dateFrom) {
         return mealplanItemDao.findAllFromDate(dateFrom);
+    }
+
+    @Override
+    public Optional<MealplanItem> getById(Long id) {
+        return mealplanItemDao.find(id);
+    }
+
+    @Override
+    public MealplanItem changeDateTo(Long id, LocalDate date) {
+        MealplanItem item = getById(id).orElseThrow(() -> recordNotFound(id));
+        item.setDate(date);
+        mealplanItemDao.update(item);
+        return item;
+    }
+
+    @Override
+    public void deleteById(Long id) {
+        getById(id).ifPresentOrElse(mealplanItemDao::remove, throwRecordNotFound(id));
     }
 }

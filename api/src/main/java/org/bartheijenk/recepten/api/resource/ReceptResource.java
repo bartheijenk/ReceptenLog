@@ -2,7 +2,6 @@ package org.bartheijenk.recepten.api.resource;
 
 import org.bartheijenk.persistence.entity.Recept;
 import org.bartheijenk.persistence.service.IReceptService;
-import org.bartheijenk.persistence.util.RecordNotFoundException;
 import org.bartheijenk.recepten.api.util.Response;
 
 import javax.inject.Inject;
@@ -30,11 +29,8 @@ public class ReceptResource implements JsonResource {
 
     @DELETE
     public void delete() {
-        try {
             receptService.deleteRecept(id);
-        } catch (RecordNotFoundException e) {
-            throw Response.badRequest(id);
-        }
+
     }
 
     @PUT

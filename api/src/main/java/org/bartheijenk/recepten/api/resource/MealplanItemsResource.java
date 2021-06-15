@@ -6,10 +6,7 @@ import org.bartheijenk.persistence.service.IMealplanService;
 import org.bartheijenk.recepten.api.payload.MealplanRequest;
 
 import javax.inject.Inject;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.QueryParam;
+import javax.ws.rs.*;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -18,6 +15,9 @@ public class MealplanItemsResource implements JsonResource {
 
     @Inject
     private IMealplanService mealplanService;
+
+    @Inject
+    private MealplanItemResource mealplanItemResource;
 
     @GET
     public List<MealplanItem> getAll(@QueryParam("dateFrom") String dateFrom) {
@@ -38,5 +38,10 @@ public class MealplanItemsResource implements JsonResource {
                 .servings(item.getServings())
                 .build();
         return mealplanService.addMealplanItem(mealplanItem);
+    }
+
+    @Path("{id}")
+    public MealplanItemResource getById(@PathParam("id") Long id) {
+        return this.mealplanItemResource.init(id);
     }
 }
