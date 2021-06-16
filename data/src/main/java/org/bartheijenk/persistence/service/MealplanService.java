@@ -25,7 +25,8 @@ public class MealplanService implements IMealplanService {
 
     @Override
     public List<MealplanItem> getAll(LocalDate dateFrom) {
-        return mealplanItemDao.findAllFromDate(dateFrom);
+        List<MealplanItem> allFromDate = mealplanItemDao.findAllFromDate(dateFrom);
+        return allFromDate;
     }
 
     @Override

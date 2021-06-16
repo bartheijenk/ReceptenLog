@@ -45,7 +45,8 @@ public abstract class Dao<E extends Identifiable<K>, K> {
     }
 
     public void remove(E e) {
-        em.remove(e.getId());
+        e = em.merge(e);
+        em.remove(e);
     }
 
     public Boolean contains(E e) {
