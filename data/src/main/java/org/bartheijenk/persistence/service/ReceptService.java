@@ -32,6 +32,12 @@ public class ReceptService implements IReceptService {
         mergeIngredienten(recept);
         mergeCategories(recept);
 
+
+        StringBuilder stringBuilder = new StringBuilder();
+        String[] split = recept.getInstructies().split("\n");
+        Arrays.stream(split).forEach(s -> stringBuilder.append(s).append("\\n"));
+
+        recept.setInstructies(stringBuilder.toString());
         receptDao.save(recept);
 
         return recept;
