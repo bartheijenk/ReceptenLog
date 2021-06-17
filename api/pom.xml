@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <artifactId>java-recipe-log</artifactId>
+        <groupId>org.bartheijenk</groupId>
+        <version>2.0-SNAPSHOT</version>
+    </parent>
+    <groupId>org.bartheijenk.recepten</groupId>
+    <artifactId>api</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <name>recipe-api</name>
+    <packaging>war</packaging>
+
+    <properties>
+        <failOnMissingWebXml>false</failOnMissingWebXml>
+
+        <maven.compiler.source>11</maven.compiler.source>
+        <maven.compiler.target>11</maven.compiler.target>
+    </properties>
+
+    <!--Stap 1:-->
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.jboss.arquillian</groupId>
+                <artifactId>arquillian-bom</artifactId> <!-- Bill of Materials -->
+                <version>1.6.0.Final</version>
+                <scope>import</scope>
+                <type>pom</type>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <dependencies>
+
+        <dependency>
+            <groupId>javax</groupId>
+            <artifactId>javaee-web-api</artifactId>
+            <version>8.0.1</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+        </dependency>
+        <!-- Stap 2. Arquillian JUnit integration framework (required at all times) -->
+
+        <dependency>
+            <groupId>org.jboss.arquillian.junit</groupId>
+            <artifactId>arquillian-junit-container</artifactId>
+            <version>1.6.0.Final</version>
+            <scope>test</scope>
+            <!--version scope already provided in the BOM-->
+        </dependency>
+        <!-- 3. Arquillian container adapter for the target container-->
+        <!-- container can be either: embedded, managed or remote -->
+        <dependency>
+            <groupId>io.openliberty.arquillian</groupId>
+            <artifactId>arquillian-liberty-managed</artifactId>
+            <version>1.0.8</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.jboss.shrinkwrap.resolver</groupId>
+            <artifactId>shrinkwrap-resolver-impl-maven</artifactId>
+            <version>3.1.4</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.13.2</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.bartheijenk</groupId>
+            <artifactId>recept-database-connector</artifactId>
+            <version>2.0-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.glassfish.jersey.media</groupId>
+            <artifactId>jersey-media-json-jackson</artifactId>
+            <version>2.17</version>
+        </dependency>
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt</artifactId>
+            <version>0.9.1</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.datatype</groupId>
+            <artifactId>jackson-datatype-jsr310</artifactId>
+        </dependency>
+    </dependencies>
+
+    <!--    <build>-->
+    <!--        <plugins>-->
+    <!--            &lt;!&ndash; Run and verify ...IT.java-tests &ndash;&gt;-->
+    <!--            <plugin>-->
+    <!--                <groupId>org.apache.maven.plugins</groupId>-->
+    <!--                <artifactId>maven-failsafe-plugin</artifactId>-->
+    <!--            </plugin>-->
+    <!--            &lt;!&ndash; Download WebSphere Liberty to target directory and start it &ndash;&gt;-->
+    <!--            &lt;!&ndash; See test/resources/arquillian.xml and server.xml for configuration &ndash;&gt;-->
+    <!--            <plugin>-->
+    <!--                <groupId>net.wasdev.wlp.maven.plugins</groupId>-->
+    <!--                <artifactId>liberty-maven-plugin</artifactId>-->
+    <!--                <version>3.0.M1</version>-->
+    <!--                <configuration>-->
+    <!--                    <assemblyArtifact>-->
+    <!--                        &lt;!&ndash; Liberty server to run test against &ndash;&gt;-->
+    <!--                        <groupId>io.openliberty</groupId>-->
+    <!--                        <artifactId>openliberty-runtime</artifactId>-->
+    <!--                        <version>20.0.0.12</version>-->
+    <!--                        <type>zip</type>-->
+    <!--                    </assemblyArtifact>-->
+    <!--                    <configFile>src/test/resources/server.xml</configFile> &lt;!&ndash; Used to run Arquillian&ndash;&gt;-->
+    <!--                </configuration>-->
+    <!--                <executions>-->
+    <!--                    &lt;!&ndash; Create server during package phase for running the application AND Arquillian &ndash;&gt;-->
+    <!--                    <execution>-->
+    <!--                        <phase>pre-integration-test</phase>-->
+    <!--                        <goals>-->
+    <!--                            <goal>create-server</goal>-->
+    <!--                        </goals>-->
+    <!--                    </execution>-->
+    <!--                </executions>-->
+    <!--            </plugin>-->
+
+    <!--            <plugin>-->
+    <!--                <groupId>org.apache.maven.plugins</groupId>-->
+    <!--                <artifactId>maven-dependency-plugin</artifactId>-->
+    <!--                <version>2.8</version>-->
+    <!--                <executions>-->
+    <!--                    <execution>-->
+    <!--                        <id>copy</id>-->
+    <!--                        <phase>pre-integration-test</phase>-->
+    <!--                        <goals>-->
+    <!--                            <goal>copy</goal>-->
+    <!--                        </goals>-->
+    <!--                    </execution>-->
+    <!--                </executions>-->
+    <!--                <configuration>-->
+    <!--                    <artifactItems>-->
+    <!--                        <artifactItem>-->
+    <!--                            <groupId>com.h2database</groupId>-->
+    <!--                            <artifictId>h2</artifictId>-->
+    <!--                            <version>1.4.200</version>-->
+    <!--                            <type>jar</type>-->
+    <!--                            <overWrite>false</overWrite>-->
+    <!--                            <outputDirectory>${project.build.directory}/liberty/wlp/usr/shared-->
+    <!--                                /config/lib</outputDirectory>-->
+    <!--                            <destFileName>h2.jar</destFileName>-->
+    <!--                        </artifactItem>-->
+    <!--                    </artifactItems>-->
+    <!--                </configuration>-->
+    <!--            </plugin>-->
+
+    <!--        </plugins>-->
+    <!--    </build>-->
+</project>
