@@ -174,7 +174,17 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.8.1</version>
             </plugin>
-        </plugins>
+                <!-- Enable liberty-maven plugin -->
+                <plugin>
+                    <groupId>io.openliberty.tools</groupId>
+                    <artifactId>liberty-maven-plugin</artifactId>
+                    <version>${version.liberty-maven-plugin}</version>
+                    <configuration>
+                        <serverName>recipe-server</serverName>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </build>
     </build>
 
 
