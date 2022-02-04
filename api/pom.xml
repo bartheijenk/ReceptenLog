@@ -14,15 +14,19 @@
     <version>1.0-SNAPSHOT</version>
     <name>recipe-api</name>
     <packaging>war</packaging>
-    <build>
-        <finalName>recipe-api</finalName>
-    </build>
 
     <properties>
         <failOnMissingWebXml>false</failOnMissingWebXml>
 
+
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
+
+        <version.liberty-maven-plugin>3.1</version.liberty-maven-plugin>
+
+        <liberty.var.default.http.port>9080</liberty.var.default.http.port>
+        <liberty.var.default.https.port>9443</liberty.var.default.https.port>
+        <liberty.var.app.context.root>/</liberty.var.app.context.root>
     </properties>
 
     <!--Stap 1:-->
@@ -101,6 +105,21 @@
         </dependency>
     </dependencies>
 
+
+    <build>
+    <finalName>recipe-api</finalName>
+    <plugins>
+    <!-- Enable liberty-maven plugin -->
+    <plugin>
+        <groupId>io.openliberty.tools</groupId>
+        <artifactId>liberty-maven-plugin</artifactId>
+        <version>${version.liberty-maven-plugin}</version>
+        <configuration>
+            <serverName>sampleAppServer</serverName>
+        </configuration>
+    </plugin>
+    </plugins>
+    </build>
     <!--    <build>-->
     <!--        <plugins>-->
     <!--            &lt;!&ndash; Run and verify ...IT.java-tests &ndash;&gt;-->
