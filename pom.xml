@@ -19,13 +19,6 @@
         <junit.version>4.13.2</junit.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-        <version.liberty-maven-plugin>3.1</version.liberty-maven-plugin>
-        <version.maven-failsafe-plugin>2.22.2</version.maven-failsafe-plugin>
-        <version.maven-surefire-plugin>2.22.2</version.maven-surefire-plugin>
-        <!-- Liberty configuration -->
-        <liberty.var.default.http.port>9080</liberty.var.default.http.port>
-        <liberty.var.default.https.port>9443</liberty.var.default.https.port>
-        <liberty.var.app.context.root>/</liberty.var.app.context.root>
     </properties>
 
     <dependencyManagement>
@@ -182,15 +175,7 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.8.1</version>
             </plugin>
-                <!-- Enable liberty-maven plugin -->
-                <plugin>
-                    <groupId>io.openliberty.tools</groupId>
-                    <artifactId>liberty-maven-plugin</artifactId>
-                    <version>${version.liberty-maven-plugin}</version>
-                    <configuration>
-                        <serverName>recipe-server</serverName>
-                    </configuration>
-                </plugin>
+
             </plugins>
         </build>
 
