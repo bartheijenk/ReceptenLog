@@ -1,0 +1,37 @@
+version: "3.9"
+services:
+  liberty:
+    build: .
+    restart: always
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+    networks:
+      - task-net
+    volumes:
+      - ./api/target/:/config/apps/
+    environment:
+      PERSISTENCE_UNIT: docker
+  db:
+    image: mysql:8.0.23
+    restart: always
+    networks:
+      - task-net
+    ports:
+      - "3306:3306"
+    cap_add:
+      - SYS_NICE
+    environment:
+      MYSQL_RANDOM_ROOT_PASSWORD: 1
+      MYSQL_USER: javausr
+      MYSQL_PASSWORD: javapw
+      MYSQL_DATABASE: taskgen
+networks:
+  task-net:
+    driver: overlay
+    attachable: true
+    ipam:
+      config:
+        - subnet: 10.10.23.0/24
+          gateway: 10.10.23.1
